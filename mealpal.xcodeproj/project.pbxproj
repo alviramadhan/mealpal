@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		462937DC2D8F21B6003C277B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 462937DB2D8F21B6003C277B /* GoogleService-Info.plist */; };
 		462937DF2D8F2343003C277B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 462937DE2D8F2343003C277B /* FirebaseAuth */; };
 		462937E12D8F2343003C277B /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 462937E02D8F2343003C277B /* FirebaseFirestore */; };
 		462937E32D8F2343003C277B /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 462937E22D8F2343003C277B /* FirebaseStorage */; };
+		468BD3F42D8F3A3B00E5F803 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 468BD3F32D8F3A3B00E5F803 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		462937DB2D8F21B6003C277B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		467F1C6F2D84052B00D42BF0 /* mealpal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mealpal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		468BD3F32D8F3A3B00E5F803 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -56,7 +56,7 @@
 		467F1C662D84052A00D42BF0 = {
 			isa = PBXGroup;
 			children = (
-				462937DB2D8F21B6003C277B /* GoogleService-Info.plist */,
+				468BD3F32D8F3A3B00E5F803 /* GoogleService-Info.plist */,
 				467F1C712D84052B00D42BF0 /* mealpal */,
 				467F1C702D84052B00D42BF0 /* Products */,
 			);
@@ -140,7 +140,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				462937DC2D8F21B6003C277B /* GoogleService-Info.plist in Resources */,
+				468BD3F42D8F3A3B00E5F803 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
