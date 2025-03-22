@@ -1,0 +1,45 @@
+# Firebase secrets
+GoogleService-Info.plist
+google-services.json
+
+# Xcode stuff
+DerivedData/
+*.xcworkspace
+*.xcuserstate
+*.xcodeproj/project.xcworkspace/xcuserdata/
+xcuserdata/
+
+# macOS junk
+.DS_Store
+
+# Swift PM
+.build/
+Packages/
+.swiftpm/
+
+# Logs
+*.log
+
+# CocoaPods
+Pods/
+*.lock
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Carthage
+Carthage/
+
+# Git
+*.orig
+
+# IDEs
+.idea/
+.vscode/
+
+# Misc
+*.swp
+*.zip
