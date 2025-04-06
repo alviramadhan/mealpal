@@ -10,15 +10,15 @@ import UIKit
 class AddMealNameCell: UITableViewCell {
 
     @IBOutlet weak var addMealNameInput: UITextField!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    var onNameChanged: ((String) -> Void)?
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+      override func awakeFromNib() {
+          super.awakeFromNib()
+          addMealNameInput.addTarget(self, action: #selector(nameChanged), for: .editingChanged)
+      }
 
-        // Configure the view for the selected state
-    }
+      @objc func nameChanged() {
+          onNameChanged?(addMealNameInput.text ?? "")
+      }
 
 }

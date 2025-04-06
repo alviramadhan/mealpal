@@ -1,5 +1,5 @@
 //
-//  AddSaveButtonCell.swift
+//  GroceryAddCell.swift
 //  mealpal
 //
 //  Created by Alvi Ramadhan on 6/4/2025.
@@ -7,19 +7,14 @@
 
 import UIKit
 
-class AddSaveButtonCell: UITableViewCell {
+class GroceryAddCell: UITableViewCell {
+
+    @IBOutlet weak var GroceryInputTextfield: UITextField!
     
-    var onSaveTapped: (() -> Void)?
-    @IBOutlet weak var addSaveButton: UIButton!
-    
+    @IBOutlet weak var GroceryDeleteButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-    }
-    
-
-    @IBAction func saveButtonTapped(_ sender: UIButton) {
-        onSaveTapped?()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

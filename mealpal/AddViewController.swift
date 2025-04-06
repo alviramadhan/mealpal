@@ -14,6 +14,7 @@ class AddViewController: UITableViewController, UIImagePickerControllerDelegate,
     var mealName: String = ""
     var selectedDate: Date = Date()
     var selectedTitle: String = "Breakfast"
+    var onSave: ((Meal) -> Void)?
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
@@ -26,7 +27,11 @@ class AddViewController: UITableViewController, UIImagePickerControllerDelegate,
             }
             return cell
         } else if indexPath.row == 2 {
-            return tableView.dequeueReusableCell(withIdentifier: "AddMealNameCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AddMealNameCell", for: indexPath) as! AddMealNameCell
+               cell.onNameChanged = { [weak self] name in
+                   self?.mealName = name
+               }
+               return cell
         } else if indexPath.row >= 3 && indexPath.row < 3 + ingredients.count {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AddInputIngredientCell", for: indexPath)
             return cell
@@ -40,8 +45,12 @@ class AddViewController: UITableViewController, UIImagePickerControllerDelegate,
             cell.onDateChanged = { self.selectedDate = $0 }
             cell.onTitleChanged = { self.selectedTitle = $0 }
             return cell
-        } else if indexPath.row == 5 + ingredients.count {
-            return tableView.dequeueReusableCell(withIdentifier: "AddSaveButtonCell", for: indexPath)
+        } else if indexPath.row == 4 + ingredients.count + 1 { // adjusted for meta cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AddSaveButtonCell", for: indexPath) as! AddSaveButtonCell
+            cell.onSaveTapped = { [weak self] in
+                self?.saveMeal()
+            }
+            return cell
         }
 
         return UITableViewCell()
@@ -62,6 +71,34 @@ class AddViewController: UITableViewController, UIImagePickerControllerDelegate,
         picker.sourceType = .photoLibrary
         picker.delegate = self
         present(picker, animated: true, completion: nil)
+    }
+    
+    func saveMeal() {
+        let meal = Meal(
+            title: selectedTitle,
+            name: mealName,
+            imageName: "foodsample1", //  image handling later
+            date: selectedDate, ingredients: ingredients.filter { !$0.isEmpty }
+        )
+        
+        MealRepository.shared.add(meal: meal)
+        print("Meal: \(meal.title) - \(meal.name)")
+
+        // Toast message
+        let alert = UIAlertController(title: "Success", message: "Meal saved!", preferredStyle: .alert)
+        present(alert, animated: true)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            alert.dismiss(animated: true) {
+                if let tabBarController = self.tabBarController,
+                   let viewControllers = tabBarController.viewControllers,
+                   viewControllers.count > 1,
+                   let nav = viewControllers[1] as? UINavigationController,
+                   let calendarVC = nav.viewControllers.first as? CalendarViewController {
+                    calendarVC.reloadMeals()
+                }
+            }
+        }
     }
     
     @objc func addIngredientTapped() {

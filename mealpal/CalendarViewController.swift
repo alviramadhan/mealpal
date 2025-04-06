@@ -17,7 +17,7 @@ class CalendarViewController: UITableViewController {
         return Calendar.current.date(from: components) ?? Date()
     }
 
-    let meals = [
+    var meals = [
         Meal(title: "Breakfast", name: "Omelette", imageName: "foodsample1", date: Date(), ingredients: ["Egg", "Cheese", "Tomato"]),
         Meal(title: "Lunch", name: "Grilled Chicken", imageName: "foodsample1", date: Date(), ingredients: ["Chicken", "Spices", "Olive Oil"]),
         Meal(title: "Dinner", name: "Pasta", imageName: "foodsample1", date: Date(), ingredients: ["Pasta", "Sauce", "Parmesan"])
@@ -53,26 +53,22 @@ class CalendarViewController: UITableViewController {
         } else {
             // Calendar Header Cell (top scrollable date selector)
             let cell = tableView.dequeueReusableCell(withIdentifier: "calendarHeaderCell", for: indexPath) as! CalendarHeaderCell
+            cell.selectedDate = selectedDate
+            cell.onDateChanged = { [weak self] newDate in
+                self?.selectedDate = newDate
+                self?.reloadMeals()
+            }
             return cell
         }
+    }
+    
+    func reloadMeals() {
+        meals = MealRepository.shared.getMeals(for: selectedDate)
+        tableView.reloadData()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // No need for register() since we're using storyboard prototype cells
+        reloadMeals()
     }
-
-
-
 }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-

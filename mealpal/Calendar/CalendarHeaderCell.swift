@@ -9,6 +9,7 @@ import UIKit
 
 class CalendarHeaderCell: UITableViewCell {
 
+    var onDateChanged: ((Date) -> Void)?
     var currentStartDate: Int = 1
     var selectedDate = Date()
     let dateFormatter: DateFormatter = {
@@ -25,6 +26,8 @@ class CalendarHeaderCell: UITableViewCell {
 
             let day = Calendar.current.component(.day, from: newDate)
             button.setTitle("\(day)", for: .normal)
+            button.tag = i
+            button.addTarget(self, action: #selector(dateButtonTapped(_:)), for: .touchUpInside)
             button.isHidden = false
         }
     }
@@ -38,14 +41,16 @@ class CalendarHeaderCell: UITableViewCell {
     
     @IBAction func previousArrowTapped(_ sender: Any) {
         guard let newDate = Calendar.current.date(byAdding: .day, value: -5, to: selectedDate) else { return }
-        selectedDate = newDate
-        updateDateButtons()
+           selectedDate = newDate
+           updateDateButtons()
+           onDateChanged?(newDate)
     }
 
     @IBAction func nextArrowTapped(_ sender: Any) {
         guard let newDate = Calendar.current.date(byAdding: .day, value: 5, to: selectedDate) else { return }
-        selectedDate = newDate
-        updateDateButtons()
+           selectedDate = newDate
+           updateDateButtons()
+           onDateChanged?(newDate)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -57,6 +62,13 @@ class CalendarHeaderCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         updateDateButtons()
+    }
+    
+    @objc func dateButtonTapped(_ sender: UIButton) {
+        guard let newDate = Calendar.current.date(byAdding: .day, value: sender.tag, to: selectedDate) else { return }
+        selectedDate = newDate
+        updateDateButtons()
+        onDateChanged?(newDate)
     }
 
 }
