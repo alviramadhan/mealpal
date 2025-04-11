@@ -1,15 +1,16 @@
 //
-//  AddInputIngridientTableViewCell.swift
+//  ResultTableViewCell.swift
 //  mealpal
 //
-//  Created by Alvi Ramadhan on 6/4/2025.
+//  Created by Alvi Ramadhan on 11/4/2025.
 //
 
 import UIKit
 
-class AddInputIngridient: UITableViewCell {
-    
-    @IBOutlet weak var InputIngredientTextField: UITextField!
+class ResultTableViewCell: UITableViewCell {
+
+    @IBOutlet weak var SearchScImageView: UIImageView!
+    @IBOutlet weak var SearchScMealNameLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

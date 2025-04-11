@@ -99,7 +99,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UQ2-NK-o4W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1048" y="616"/>
+            <point key="canvasLocation" x="1044" y="745"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="vg5-qq-dW0">
@@ -189,7 +189,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jA0-bS-x6B" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3064" y="616"/>
+            <point key="canvasLocation" x="4061.25" y="615.84507042253517"/>
         </scene>
         <!--Calendar Scene-->
         <scene sceneID="eJL-LA-ZxJ">
@@ -476,17 +476,17 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddImagePickerCell" id="7v0-Ih-Zha" customClass="ImagePickerCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="101" width="320" height="277"/>
+                                <rect key="frame" x="0.0" y="101" width="320" height="277.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7v0-Ih-Zha" id="VdM-TN-aNm">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="277"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="277.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="KLQ-eW-3H4">
-                                            <rect key="frame" x="20" y="20" width="280" height="237"/>
+                                            <rect key="frame" x="20" y="20" width="280" height="237.5"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZX-Vu-eHf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="237"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="237.5"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="12"/>
@@ -508,17 +508,17 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddMealNameCell" id="eEg-vm-vRZ" customClass="AddMealNameCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="378" width="320" height="87.5"/>
+                                <rect key="frame" x="0.0" y="378.5" width="320" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eEg-vm-vRZ" id="75r-of-o1L">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="87.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="0Jd-2a-pTt">
-                                            <rect key="frame" x="30" y="0.0" width="260" height="87.5"/>
+                                            <rect key="frame" x="30" y="0.0" width="260" height="88"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add Meal Name Here" textAlignment="natural" minimumFontSize="17" id="xRw-lf-vSY">
-                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="87"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="87.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -538,7 +538,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddInputIngredientCell" id="fLA-lS-JV2" customClass="AddInputIngridient" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="465.5" width="320" height="41"/>
+                                <rect key="frame" x="0.0" y="466.5" width="320" height="41"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fLA-lS-JV2" id="ziG-is-qHa">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
@@ -573,12 +573,15 @@
                                         <constraint firstItem="lRy-bB-xrD" firstAttribute="leading" secondItem="ziG-is-qHa" secondAttribute="leading" constant="30" id="iR9-oO-kI2"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="InputIngredientTextField" destination="bjY-dI-wGs" id="URy-EU-Sk3"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddAddIngredientButtonCell" id="1NZ-D2-1Xf" customClass="AddAddIngredientButtonCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="506.5" width="320" height="51.5"/>
+                                <rect key="frame" x="0.0" y="507.5" width="320" height="52"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1NZ-D2-1Xf" id="vO3-sQ-kRI">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="51.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="52"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j1s-ax-hxE" userLabel="Add Add Row Button">
@@ -594,7 +597,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddMetaCell" rowHeight="90" id="Aj6-Q6-qF7" customClass="AddMetaCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="558" width="320" height="90"/>
+                                <rect key="frame" x="0.0" y="559.5" width="320" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Aj6-Q6-qF7" translatesAutoresizingMaskIntoConstraints="NO" id="gCi-na-h7k">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
@@ -650,17 +653,17 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddSaveButtonCell" id="pXV-R1-Cki" customClass="AddSaveButtonCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="648" width="320" height="51"/>
+                                <rect key="frame" x="0.0" y="649.5" width="320" height="51"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pXV-R1-Cki" id="FPY-SL-dd8">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="51"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8dJ-Y3-1qV">
-                                            <rect key="frame" x="50" y="10" width="220" height="41"/>
+                                            <rect key="frame" x="50" y="10" width="220" height="42"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4gu-XM-NFB">
-                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="41"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="42"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="tinted" title="Save Meal"/>
                                                     <connections>
@@ -828,6 +831,7 @@
                         <segue destination="f4l-ER-FdI" kind="relationship" relationship="viewControllers" id="d9G-vr-psj"/>
                         <segue destination="D2o-d3-Sdd" kind="relationship" relationship="viewControllers" id="waw-cw-Qe8"/>
                         <segue destination="tYA-68-g70" kind="relationship" relationship="viewControllers" id="EOP-Hf-NlL"/>
+                        <segue destination="NSO-0p-Yky" kind="relationship" relationship="viewControllers" id="hXY-FP-WEQ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ECh-qJ-Qmm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -914,7 +918,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Spg-x9-kjT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2063" y="560"/>
+            <point key="canvasLocation" x="2072" y="689"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZM4-To-RjJ">
@@ -932,7 +936,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0c6-jW-eBW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-214" y="560"/>
+            <point key="canvasLocation" x="-285" y="320"/>
         </scene>
         <!--Home-->
         <scene sceneID="bCh-fe-gg5">
@@ -1099,26 +1103,26 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GroceryAddCell" id="baQ-PX-z9Z" customClass="GroceryAddCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="152" width="320" height="25"/>
+                                <rect key="frame" x="0.0" y="152" width="320" height="26"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="baQ-PX-z9Z" id="96t-oN-zgE">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="25"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="26"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="zd4-1b-haD" userLabel="CardView">
-                                            <rect key="frame" x="10" y="0.0" width="300" height="25"/>
+                                            <rect key="frame" x="10" y="0.0" width="300" height="26"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Dak-me-6uW">
-                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="25"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="26"/>
                                                     <subviews>
                                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add Meal Name Here" textAlignment="natural" minimumFontSize="17" id="h0v-fB-JGi">
-                                                            <rect key="frame" x="0.0" y="0.0" width="214" height="24.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="214" height="25.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                         </textField>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MFH-ie-MNb" userLabel="Add Add Row Button">
-                                                            <rect key="frame" x="222" y="0.0" width="78" height="24.5"/>
+                                                            <rect key="frame" x="222" y="0.0" width="78" height="25.5"/>
                                                             <state key="normal" title="Button"/>
                                                             <buttonConfiguration key="configuration" style="plain" title="Delete "/>
                                                         </button>
@@ -1156,7 +1160,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GroceryActionCell" id="0c9-TR-8FN" customClass="GroceryActionCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="177" width="320" height="41"/>
+                                <rect key="frame" x="0.0" y="178" width="320" height="41"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0c9-TR-8FN" id="hEK-FV-2bI">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
@@ -1224,6 +1228,134 @@
             </objects>
             <point key="canvasLocation" x="2122.5" y="-761.61971830985919"/>
         </scene>
+        <!--Search Meal-->
+        <scene sceneID="afO-ub-qI4">
+            <objects>
+                <tableViewController id="ULS-mn-Wnx" customClass="SearchTableViewController" customModule="mealpal" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="bXJ-iS-G2M">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchBarTableViewCell" id="WfX-1N-cy6" customClass="SearchBarTableViewCell" customModule="mealpal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="320" height="76.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WfX-1N-cy6" id="wSI-r4-y7W">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="76.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="oC3-2g-Ifz">
+                                            <rect key="frame" x="0.0" y="16" width="320" height="44"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="1Aw-HS-6iE"/>
+                                            </constraints>
+                                            <textInputTraits key="textInputTraits"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="ULS-mn-Wnx" id="5cJ-Z8-Iyw"/>
+                                            </connections>
+                                        </searchBar>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="oC3-2g-Ifz" secondAttribute="trailing" id="8K5-c0-6aa"/>
+                                        <constraint firstItem="oC3-2g-Ifz" firstAttribute="leading" secondItem="wSI-r4-y7W" secondAttribute="leading" id="8Yd-Fc-4Um"/>
+                                        <constraint firstAttribute="bottom" secondItem="oC3-2g-Ifz" secondAttribute="bottom" constant="16" id="Q9g-XY-aa5"/>
+                                        <constraint firstItem="oC3-2g-Ifz" firstAttribute="top" secondItem="wSI-r4-y7W" secondAttribute="top" constant="16" id="afa-qm-rEJ"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="SearchScSearchBar" destination="oC3-2g-Ifz" id="uOR-ao-hCs"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MealSwitchTableViewCell" id="pDt-DW-HLU" customClass="MealSwitchTableViewCell" customModule="mealpal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="126.5" width="320" height="51.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pDt-DW-HLU" id="ObB-J3-eVD" customClass="SearchBarTableViewCell" customModule="mealpal" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="51.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ESa-nc-88a">
+                                            <rect key="frame" x="95" y="8" width="131" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="My Meal"/>
+                                                <segment title="Explore"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="SearchScSwitcher:" destination="eV7-hm-9lx" eventType="valueChanged" id="43I-wF-Z2v"/>
+                                                <action selector="segmentChanged:" destination="pDt-DW-HLU" eventType="valueChanged" id="WEj-at-Zo1"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="MealSwitcher" destination="ESa-nc-88a" id="2FR-X0-q8o"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ResultTableViewCell" id="HKm-9x-0zb" customClass="ResultTableViewCell" customModule="mealpal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="178" width="320" height="60.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HKm-9x-0zb" id="37r-Mm-C2e">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="60.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ym-Cz-Gg4">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="60.5"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xNc-d9-rdY">
+                                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="RFI-Gx-bw7"/>
+                                                        <constraint firstAttribute="height" constant="60" id="XkU-cv-rLG"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meal Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nkO-yb-Xha">
+                                                    <rect key="frame" x="60" y="0.0" width="260" height="60.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="nkO-yb-Xha" firstAttribute="leading" secondItem="xNc-d9-rdY" secondAttribute="trailing" id="4Lx-oU-Vxe"/>
+                                                <constraint firstAttribute="bottom" secondItem="nkO-yb-Xha" secondAttribute="bottom" id="Gfq-T7-gMe"/>
+                                                <constraint firstAttribute="trailing" secondItem="nkO-yb-Xha" secondAttribute="trailing" id="Rus-9Y-EkN"/>
+                                                <constraint firstItem="nkO-yb-Xha" firstAttribute="top" secondItem="0ym-Cz-Gg4" secondAttribute="top" id="dtv-H3-v2Z"/>
+                                                <constraint firstItem="xNc-d9-rdY" firstAttribute="leading" secondItem="0ym-Cz-Gg4" secondAttribute="leading" constant="10" id="jHt-LP-FCJ"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" name="CardBackground"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="0ym-Cz-Gg4" secondAttribute="trailing" id="5uL-lZ-V2r"/>
+                                        <constraint firstItem="0ym-Cz-Gg4" firstAttribute="leading" secondItem="37r-Mm-C2e" secondAttribute="leading" id="McB-Gh-j2z"/>
+                                        <constraint firstItem="0ym-Cz-Gg4" firstAttribute="top" secondItem="37r-Mm-C2e" secondAttribute="top" id="cCZ-oB-UC8"/>
+                                        <constraint firstItem="0ym-Cz-Gg4" firstAttribute="top" secondItem="37r-Mm-C2e" secondAttribute="top" id="idW-Va-1Bu"/>
+                                        <constraint firstAttribute="bottom" secondItem="0ym-Cz-Gg4" secondAttribute="bottom" id="y6T-EM-6Al"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="12"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="SearchScImageView" destination="xNc-d9-rdY" id="2lh-vf-8mr"/>
+                                    <outlet property="SearchScMealNameLabel" destination="nkO-yb-Xha" id="aRM-ez-8yM"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ULS-mn-Wnx" id="bis-tV-292"/>
+                            <outlet property="delegate" destination="ULS-mn-Wnx" id="r3L-q3-qq2"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Search Meal" id="RPp-vl-BBW"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZCU-Hl-ZOp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="eV7-hm-9lx" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2123" y="33"/>
+        </scene>
         <!--Grocery-->
         <scene sceneID="PVP-Ed-VhZ">
             <objects>
@@ -1242,6 +1374,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h9h-FY-PqW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1125" y="-761.61971830985919"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="aWs-Zy-UPw">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NSO-0p-Yky" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="qsY-jw-0Lx"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6B0-R0-SVk">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ULS-mn-Wnx" kind="relationship" relationship="rootViewController" id="5zx-Tg-ecn"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sec-NT-di8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1125" y="33"/>
         </scene>
     </scenes>
     <resources>

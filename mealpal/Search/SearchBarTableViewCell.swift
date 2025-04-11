@@ -1,15 +1,16 @@
 //
-//  AddInputIngridientTableViewCell.swift
+//  SearchBarTableViewCell.swift
 //  mealpal
 //
-//  Created by Alvi Ramadhan on 6/4/2025.
+//  Created by Alvi Ramadhan on 11/4/2025.
 //
 
 import UIKit
 
-class AddInputIngridient: UITableViewCell {
-    
-    @IBOutlet weak var InputIngredientTextField: UITextField!
+class SearchBarTableViewCell: UITableViewCell {
+
+   
+    @IBOutlet weak var SearchScSearchBar: UISearchBar!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
