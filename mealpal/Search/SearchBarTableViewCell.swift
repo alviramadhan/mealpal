@@ -7,19 +7,20 @@
 
 import UIKit
 
-class SearchBarTableViewCell: UITableViewCell {
+class SearchBarTableViewCell: UITableViewCell, UISearchBarDelegate {
 
-   
+
     @IBOutlet weak var SearchScSearchBar: UISearchBar!
+    
+
+    var onSearchChanged: ((String) -> Void)?
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+     //   SearchScSearchBar.delegate = self
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        onSearchChanged?(searchText)
     }
-
 }

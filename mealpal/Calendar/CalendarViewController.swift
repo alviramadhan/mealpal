@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class CalendarViewController: UITableViewController {
+    
+    var meals: [Meal] = []
     
     func getDate(day: Int, month: Int, year: Int) -> Date {
         var components = DateComponents()
@@ -17,11 +21,7 @@ class CalendarViewController: UITableViewController {
         return Calendar.current.date(from: components) ?? Date()
     }
 
-    var meals = [
-        Meal(title: "Breakfast", name: "Omelette", imageName: "foodsample1", date: Date(), ingredients: ["Egg", "Cheese", "Tomato"]),
-        Meal(title: "Lunch", name: "Grilled Chicken", imageName: "foodsample1", date: Date(), ingredients: ["Chicken", "Spices", "Olive Oil"]),
-        Meal(title: "Dinner", name: "Pasta", imageName: "foodsample1", date: Date(), ingredients: ["Pasta", "Sauce", "Parmesan"])
-    ]
+  
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE MMM dd yyyy"
@@ -63,12 +63,39 @@ class CalendarViewController: UITableViewController {
     }
     
     func reloadMeals() {
-        meals = MealRepository.shared.getMeals(for: selectedDate)
-        tableView.reloadData()
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let startOfDay = Calendar.current.startOfDay(for: selectedDate)
+        let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
+
+        Firestore.firestore().collection("meals")
+            .whereField("userId", isEqualTo: uid)
+            .whereField("date", isGreaterThanOrEqualTo: Timestamp(date: startOfDay))
+            .whereField("date", isLessThan: Timestamp(date: endOfDay))
+            .getDocuments { snapshot, error in
+                if let docs = snapshot?.documents {
+                    self.meals = docs.compactMap { doc in
+                        let data = doc.data()
+                        return Meal(
+                            userId: uid,
+                            title: data["title"] as? String ?? "",
+                            name: data["name"] as? String ?? "",
+                            imageName: data["imageName"] as? String ?? "",
+                            date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
+                            ingredients: data["ingredients"] as? [String] ?? []
+                        )
+                    }
+                    self.tableView.reloadData()
+                }
+            }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        reloadMeals()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         reloadMeals()
     }
 }

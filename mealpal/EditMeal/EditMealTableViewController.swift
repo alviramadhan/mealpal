@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class EditMealTableViewController: UITableViewController {
     var mealImage: UIImage?
@@ -60,8 +62,31 @@ class EditMealTableViewController: UITableViewController {
             }
             return cell
         } else {
-            // Save button cell
             let cell = tableView.dequeueReusableCell(withIdentifier: "EditMealSaveButtonTableViewCell", for: indexPath) as! EditMealSaveButtonTableViewCell
+            cell.onSaveTapped = { [weak self] in
+                guard let self = self, let uid = Auth.auth().currentUser?.uid else { return }
+                
+                // Assuming you're editing an existing meal and you have its ID
+                let updatedData: [String: Any] = [
+                    "name": self.mealName,
+                    "ingredients": self.ingredients,
+                ]
+                
+                let mealRef = Firestore.firestore().collection("meals").whereField("userId", isEqualTo: uid).whereField("name", isEqualTo: self.mealName)
+
+                mealRef.getDocuments { snapshot, error in
+                    if let doc = snapshot?.documents.first {
+                        Firestore.firestore().collection("meals").document(doc.documentID).updateData(updatedData) { error in
+                            if let error = error {
+                                print("❌ Failed to update meal:", error.localizedDescription)
+                            } else {
+                                print("✅ Meal updated.")
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        }
+                    }
+                }
+            }
             return cell
         }
     }

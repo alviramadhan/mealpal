@@ -6,24 +6,52 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     
-    var allMeals: [Meal] = [
-        Meal(title: "Breakfast", name: "KFC", imageName: "food1", date: Date(), ingredients: ["Chicken", "Oil"]),
-        Meal(title: "Lunch", name: "CFC", imageName: "food2", date: Date(), ingredients: ["Chicken", "Spices"])
-    ]
+    var allMeals: [Meal] = []
     var filteredMeals: [Meal] = []
     var selectedSegment: Int = 0 // 0: My Meals, 1: Explore
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        fetchUserMeals()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if let searchCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? SearchBarTableViewCell {
+            searchCell.SearchScSearchBar.becomeFirstResponder()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchUserMeals()
+    }
+    
+    func fetchUserMeals() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Firestore.firestore().collection("meals")
+            .whereField("userId", isEqualTo: uid)
+            .getDocuments { snapshot, error in
+                if let docs = snapshot?.documents {
+                    self.allMeals = docs.compactMap { doc in
+                        let data = doc.data()
+                        return Meal(
+                            userId: uid,
+                            title: data["title"] as? String ?? "",
+                            name: data["name"] as? String ?? "",
+                            imageName: data["imageName"] as? String ?? "",
+                            date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
+                            ingredients: data["ingredients"] as? [String] ?? []
+                        )
+                    }
+                    self.applyFilter()
+                }
+            }
     }
     
     // MARK: - Table view data source
@@ -37,15 +65,28 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     
-    func applyFilter() {
+    func applyFilter(withSearchText searchText: String = "") {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        let baseFiltered: [Meal]
         if selectedSegment == 0 {
-            // My Meals: Show allMeals with a specific condition (you can adjust)
-            filteredMeals = allMeals.filter { $0.title == "Breakfast" || $0.title == "Lunch" }
+            baseFiltered = allMeals.filter { $0.userId == uid }
         } else {
-            // Explore: Show all meals that are not in "My Meals"
-            filteredMeals = allMeals.filter { $0.title != "Breakfast" && $0.title != "Lunch" }
+            baseFiltered = allMeals.filter { $0.userId != uid }
         }
+
+        if searchText.isEmpty {
+            filteredMeals = baseFiltered
+        } else {
+            filteredMeals = baseFiltered.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        }
+
         tableView.reloadData()
+    }
+
+    // MARK: - UISearchBarDelegate
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        applyFilter(withSearchText: searchText)
     }
     
     
@@ -54,10 +95,10 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         if indexPath.row == 0 {
             // Search Bar
             let cell = tableView.dequeueReusableCell(withIdentifier: "SearchBarTableViewCell", for: indexPath) as! SearchBarTableViewCell
-            cell.SearchScSearchBar.placeholder = "Search meals..."
-            cell.SearchScSearchBar.delegate = self
+            cell.onSearchChanged = { [weak self] text in
+                self?.applyFilter(withSearchText: text)
+            }
             return cell
-            
         } else if indexPath.row == 1 {
             // Segmented Control
             let cell = tableView.dequeueReusableCell(withIdentifier: "MealSwitchTableViewCell", for: indexPath) as! MealSwitchTableViewCell

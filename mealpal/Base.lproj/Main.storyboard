@@ -158,6 +158,9 @@
                                             <color key="baseForegroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <color key="baseBackgroundColor" red="0.21960783" green="0.2823529541" blue="0.2470588088" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="signUpPressed:" destination="Fvh-33-I8o" eventType="touchUpInside" id="Lzc-L0-Ldd"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -181,10 +184,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="BlN-lc-N3N"/>
                     <connections>
-                        <outlet property="signupConfirmPasswordTextFIeld" destination="6Tw-Le-Wxn" id="42y-H9-myQ"/>
-                        <outlet property="signupEmailTextField" destination="eDN-Ao-x6A" id="TWz-nb-Iwc"/>
+                        <outlet property="signupConfirmPasswordTextFIeld" destination="6Tw-Le-Wxn" id="QwF-xR-02o"/>
+                        <outlet property="signupEmailTextField" destination="eDN-Ao-x6A" id="hrm-7b-lOC"/>
                         <outlet property="signupPasswordTextField" destination="VSg-lU-iZ0" id="UKD-IB-46L"/>
-                        <outlet property="signupUsernameTextField" destination="SWd-l9-ynJ" id="Gri-hm-X7c"/>
+                        <outlet property="signupUsernameTextField" destination="SWd-l9-ynJ" id="Yni-RY-m8K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jA0-bS-x6B" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1151,7 +1154,7 @@
         <scene sceneID="afO-ub-qI4">
             <objects>
                 <tableViewController id="ULS-mn-Wnx" customClass="SearchTableViewController" customModule="mealpal" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="bXJ-iS-G2M">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="bXJ-iS-G2M">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1163,12 +1166,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="76.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="oC3-2g-Ifz">
+                                        <searchBar contentMode="redraw" showsSearchResultsButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oC3-2g-Ifz">
                                             <rect key="frame" x="0.0" y="16" width="320" height="44.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="1Aw-HS-6iE"/>
                                             </constraints>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                             <connections>
                                                 <outlet property="delegate" destination="ULS-mn-Wnx" id="5cJ-Z8-Iyw"/>
                                             </connections>
@@ -1182,7 +1185,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="SearchScSearchBar" destination="oC3-2g-Ifz" id="uOR-ao-hCs"/>
+                                    <outlet property="SearchScSearchBar" destination="oC3-2g-Ifz" id="Mg1-82-g14"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MealSwitchTableViewCell" id="pDt-DW-HLU" customClass="MealSwitchTableViewCell" customModule="mealpal" customModuleProvider="target">
@@ -1572,12 +1575,17 @@
                                             <rect key="frame" x="46" y="13" width="228" height="172"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Change name here.." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="24N-9M-AXT">
-                                                    <rect key="frame" x="0.0" y="0.0" width="228" height="81.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="228" height="51.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Change email here.." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2BU-Cx-vKy">
-                                                    <rect key="frame" x="0.0" y="90.5" width="228" height="81.5"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Change password here.." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2BU-Cx-vKy">
+                                                    <rect key="frame" x="0.0" y="60.5" width="228" height="51"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Change email here.." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VJU-la-KiP">
+                                                    <rect key="frame" x="0.0" y="120.5" width="228" height="51.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -1594,6 +1602,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="emailTextField" destination="VJU-la-KiP" id="fi4-yW-eS6"/>
                                     <outlet property="nameTextField" destination="24N-9M-AXT" id="CXe-XO-5d6"/>
                                     <outlet property="passwordTextField" destination="2BU-Cx-vKy" id="CgT-vm-o0B"/>
                                 </connections>

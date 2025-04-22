@@ -48,6 +48,34 @@ class SignUpViewController: UIViewController {
         let imageName = signupConfirmPasswordTextFIeld.isSecureTextEntry ? "eye.slash" : "eye"
         sender.setImage(UIImage(systemName: imageName), for: .normal)
     }
+    
+    @IBAction func signUpPressed(_ sender: UIButton) {
+        guard let name = signupUsernameTextField.text, !name.isEmpty,
+              let email = signupEmailTextField.text, !email.isEmpty,
+              let password = signupPasswordTextField.text, !password.isEmpty,
+              let confirmPassword = signupConfirmPasswordTextFIeld.text, !confirmPassword.isEmpty else {
+            self.showAlert(title: "Error", message: "Please fill in all fields.")
+            return
+        }
+
+        guard password == confirmPassword else {
+            self.showAlert(title: "Error", message: "Passwords do not match.")
+            return
+        }
+
+        Repository().signUpUser(email: email, password: password, name: name) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    let homeViewController = self.storyboard?.instantiateViewController(identifier: "HomeVC") as? UITabBarController
+                    self.view.window?.rootViewController = homeViewController
+                    self.view.window?.makeKeyAndVisible()
+                case .failure(let error):
+                    self.showAlert(title: "Sign Up Failed", message: error.localizedDescription)
+                }
+            }
+        }
+    }
 }
 
 

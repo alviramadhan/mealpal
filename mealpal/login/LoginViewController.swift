@@ -34,12 +34,24 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPressed(_ sender: Any) {
-        
-        // programmatically navigate to HomeVC
-        let homeViewController = self.storyboard?.instantiateViewController(identifier: "HomeVC") as? UITabBarController
-            
-        self.view.window?.rootViewController = homeViewController
-        self.view.window?.makeKeyAndVisible()
+        guard let email = loginEmailTextField.text, !email.isEmpty,
+              let password = loginPasswordTextField.text, !password.isEmpty else {
+            self.showAlert(title: "Error", message: "Please enter email and password.")
+            return
+        }
+
+        Repository().loginUser(email: email, password: password) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(_):
+                    let homeViewController = self.storyboard?.instantiateViewController(identifier: "HomeVC") as? UITabBarController
+                    self.view.window?.rootViewController = homeViewController
+                    self.view.window?.makeKeyAndVisible()
+                case .failure(let error):
+                    self.showAlert(title: "Login Failed", message: error.localizedDescription)
+                }
+            }
+        }
     }
     
 }

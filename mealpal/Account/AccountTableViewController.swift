@@ -1,4 +1,6 @@
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class AccountTableViewController: UITableViewController {
 
@@ -26,20 +28,83 @@ class AccountTableViewController: UITableViewController {
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "AccountHeaderTableViewCell", for: indexPath) as! AccountHeaderTableViewCell
-            // Configure user name/email here if needed
+
+            if let uid = Auth.auth().currentUser?.uid {
+                Firestore.firestore().collection("users").document(uid).getDocument { snapshot, error in
+                    if let data = snapshot?.data() {
+                        cell.nameLabel.text = data["name"] as? String
+                        cell.emailLabel.text = data["email"] as? String
+                    }
+                }
+            }
+
             return cell
+
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "AccountEditTableViewCell", for: indexPath) as! AccountEditTableViewCell
-            // Hook up saving logic later
+
+            if let uid = Auth.auth().currentUser?.uid {
+                Firestore.firestore().collection("users").document(uid).getDocument { snapshot, error in
+                    if let data = snapshot?.data() {
+                        cell.nameTextField.text = data["name"] as? String
+                        cell.emailTextField.text = data["email"] as? String
+                    }
+                }
+            }
+
             return cell
+
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "AccountSaveTableViewCell", for: indexPath) as! AccountSaveTableViewCell
-            // Hook up save button action here
+            cell.onSaveTapped = { [weak self] in
+                guard let self = self else { return }
+                if let editCell = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? AccountEditTableViewCell,
+                   let uid = Auth.auth().currentUser?.uid,
+                   let name = editCell.nameTextField.text,
+                   let email = editCell.emailTextField.text,
+                   let password = editCell.passwordTextField.text {
+
+                    // Update Firestore name and email
+                    Firestore.firestore().collection("users").document(uid).updateData([
+                        "name": name,
+                        "email": email
+                    ]) { error in
+                        if let error = error {
+                            print("Failed to update user info: \(error.localizedDescription)")
+                        } else {
+                            print(" User info updated in Firestore.")
+
+                            // Update Firebase Auth password
+                            Auth.auth().currentUser?.updatePassword(to: password) { error in
+                                if let error = error {
+                                    print(" Password update failed: \(error.localizedDescription)")
+                                } else {
+                                    print(" Password updated.")
+                                }
+                            }
+
+                            self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                        }
+                    }
+                }
+            }
             return cell
+
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "AccountLogoutTableViewCell", for: indexPath) as! AccountLogoutTableViewCell
-            // Hook up save button action here
+            cell.onLogoutTapped = {
+                do {
+                    try Auth.auth().signOut()
+                    if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        sceneDelegate.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+                    }
+                } catch let error {
+                    print(" Logout failed: \(error.localizedDescription)")
+                }
+            }
             return cell
+
         default:
             fatalError("Unhandled row")
         }
@@ -71,7 +136,7 @@ class AccountTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
     */
 

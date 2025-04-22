@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseStorage
 
 class AddViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -74,19 +77,58 @@ class AddViewController: UITableViewController, UIImagePickerControllerDelegate,
     }
     
     func saveMeal() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        let filteredIngredients = self.ingredients.filter { !$0.isEmpty }
+
+        // If user has selected an image, upload it. Otherwise use a default placeholder URL.
+        if let image = selectedImage,
+           let imageData = image.jpegData(compressionQuality: 0.8) {
+            
+            let imageRef = Storage.storage().reference().child("meal_images/\(UUID().uuidString).jpg")
+            
+            imageRef.putData(imageData, metadata: nil) { metadata, error in
+                if let error = error {
+                    print("❌ Image upload failed:", error.localizedDescription)
+                    return
+                }
+
+                imageRef.downloadURL { url, error in
+                    guard let imageUrl = url?.absoluteString else {
+                        print("❌ Failed to get image URL")
+                        return
+                    }
+                    self.saveMealToFirestore(uid: uid, imageUrl: imageUrl, ingredients: filteredIngredients)
+                }
+            }
+        } else {
+            // Default placeholder image URL if no image was selected
+            let placeholderUrl = "https://via.placeholder.com/150"
+            self.saveMealToFirestore(uid: uid, imageUrl: placeholderUrl, ingredients: filteredIngredients)
+        }
+    }
+
+    private func saveMealToFirestore(uid: String, imageUrl: String, ingredients: [String]) {
         let meal = Meal(
-            title: selectedTitle,
-            name: mealName,
-            imageName: "foodsample1", //  image handling later
-            date: selectedDate, ingredients: ingredients.filter { !$0.isEmpty }
+            userId: uid,
+            title: self.selectedTitle,
+            name: self.mealName,
+            imageName: imageUrl,
+            date: self.selectedDate,
+            ingredients: ingredients
         )
-        
+
         MealRepository.shared.add(meal: meal)
         print("Meal: \(meal.title) - \(meal.name)")
 
-        // Toast message
+        let db = Firestore.firestore()
+        for item in ingredients {
+            let groceryData: [String: Any] = ["name": item, "userId": uid]
+            db.collection("groceryItems").addDocument(data: groceryData)
+        }
+
         let alert = UIAlertController(title: "Success", message: "Meal saved!", preferredStyle: .alert)
-        present(alert, animated: true)
+        self.present(alert, animated: true)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
             alert.dismiss(animated: true) {

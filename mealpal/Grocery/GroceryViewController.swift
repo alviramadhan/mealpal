@@ -6,22 +6,33 @@
 //
 
 import UIKit
-import UIKit
-
+import FirebaseAuth
+import FirebaseFirestore
 
 class GroceryViewController: UITableViewController {
     
     @IBOutlet weak var GroceryAddButton: UIBarButtonItem!
-    var groceryItems: [GroceryItem] = [
-        GroceryItem(name: "Broccoli"),
-        GroceryItem(name: "Eggs"),
-        GroceryItem(name: "Chicken Breast"),
-        GroceryItem(name: "Milk")
-    ]
+    var groceryItems: [GroceryItem] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Grocery List"
+        fetchGroceryItems()
+    }
+
+    func fetchGroceryItems() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Firestore.firestore().collection("groceryItems")
+            .whereField("userId", isEqualTo: uid)
+            .getDocuments { snapshot, error in
+                if let docs = snapshot?.documents {
+                    self.groceryItems = docs.compactMap { doc in
+                        let data = doc.data()
+                        return GroceryItem(name: data["name"] as? String ?? "")
+                    }
+                    self.tableView.reloadData()
+                }
+            }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {

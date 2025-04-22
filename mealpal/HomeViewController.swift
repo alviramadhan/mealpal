@@ -6,25 +6,41 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class HomeViewController: UITableViewController {
 
     @IBOutlet weak var accountButton: UIBarButtonItem?
     
-    let meals = [
-        Meal(title: "Breakfast", name: "Omelette", imageName: "foodsample1", date: Date(), ingredients: ["Egg", "Cheese", "Tomato"]),
-        Meal(title: "Lunch", name: "Grilled Chicken", imageName: "foodsample1", date: Date(), ingredients: ["Chicken", "Spices", "Olive Oil"]),
-        Meal(title: "Dinner", name: "Pasta", imageName: "foodsample1", date: Date(), ingredients: ["Pasta", "Sauce", "Parmesan"])
-    ]
+    var meals: [Meal] = []
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchMealsFromFirestore()
     }
     
-
+    func fetchMealsFromFirestore() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Firestore.firestore().collection("meals")
+            .whereField("userId", isEqualTo: uid)
+            .getDocuments { snapshot, error in
+                if let docs = snapshot?.documents {
+                    self.meals = docs.compactMap { doc in
+                        let data = doc.data()
+                        return Meal(
+                            userId: uid,
+                            title: data["title"] as? String ?? "",
+                            name: data["name"] as? String ?? "",
+                            imageName: data["imageName"] as? String ?? "",
+                            date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
+                            ingredients: data["ingredients"] as? [String] ?? []
+                        )
+                    }
+                    self.tableView.reloadData()
+                }
+            }
+    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1 + meals.count
@@ -37,7 +53,18 @@ class HomeViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "mealCell", for: indexPath) as! MealCell
             let meal = meals[indexPath.row - 1]
             cell.homeMealTitle.text = meal.title
-            cell.homeMealImageView.image = UIImage(named: meal.imageName)
+            // Load image from URL if meal.imageName is a valid URL, else fallback to local asset
+            if let url = URL(string: meal.imageName), meal.imageName.hasPrefix("http") {
+                URLSession.shared.dataTask(with: url) { data, _, _ in
+                    if let data = data {
+                        DispatchQueue.main.async {
+                            cell.homeMealImageView.image = UIImage(data: data)
+                        }
+                    }
+                }.resume()
+            } else {
+                cell.homeMealImageView.image = UIImage(named: meal.imageName)
+            }
             cell.homeMealNameLabel.text = meal.name
             return cell
         }

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class GroceryPopUpTableViewController: UITableViewController {
 
@@ -74,9 +76,15 @@ class GroceryPopUpTableViewController: UITableViewController {
                 guard let self = self else { return }
                 let texts = self.inputTexts.map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
                 guard !texts.isEmpty else { return }
+
+                guard let uid = Auth.auth().currentUser?.uid else { return }
+                let db = Firestore.firestore()
+
                 for text in texts {
-                    self.onSave?(text)
+                    let groceryData: [String: Any] = ["name": text, "userId": uid]
+                    db.collection("groceryItems").addDocument(data: groceryData)
                 }
+
                 self.dismiss(animated: true)
             }
             cell.onCancelTapped = { [weak self] in
