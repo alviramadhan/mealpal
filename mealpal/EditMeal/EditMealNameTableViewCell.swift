@@ -1,17 +1,14 @@
 //
-//  ResultTableViewCell.swift
+//  EditMealNameTableViewCell.swift
 //  mealpal
 //
-//  Created by Alvi Ramadhan on 11/4/2025.
+//  Created by Alvi Ramadhan on 22/4/2025.
 //
 
 import UIKit
 
-class ResultTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var EditMeal: UIButton!
-    @IBOutlet weak var SearchScImageView: UIImageView!
-    @IBOutlet weak var SearchScMealNameLabel: UILabel!
+class EditMealNameTableViewCell: UITableViewCell {
+    @IBOutlet weak var mealNameTextField: UITextField!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

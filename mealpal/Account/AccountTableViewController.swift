@@ -1,13 +1,6 @@
-//
-//  GroceryPopUpTableViewController.swift
-//  mealpal
-//
-//  Created by Alvi Ramadhan on 17/4/2025.
-//
-
 import UIKit
 
-class GroceryPopUpTableViewController: UITableViewController {
+class AccountTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,13 +15,34 @@ class GroceryPopUpTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return 4
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.row {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AccountHeaderTableViewCell", for: indexPath) as! AccountHeaderTableViewCell
+            // Configure user name/email here if needed
+            return cell
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AccountEditTableViewCell", for: indexPath) as! AccountEditTableViewCell
+            // Hook up saving logic later
+            return cell
+        case 2:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AccountSaveTableViewCell", for: indexPath) as! AccountSaveTableViewCell
+            // Hook up save button action here
+            return cell
+        case 3:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AccountLogoutTableViewCell", for: indexPath) as! AccountLogoutTableViewCell
+            // Hook up save button action here
+            return cell
+        default:
+            fatalError("Unhandled row")
+        }
     }
 
     /*

@@ -9,11 +9,22 @@ import UIKit
 
 class HomeViewController: UITableViewController {
 
+    @IBOutlet weak var accountButton: UIBarButtonItem?
+    
     let meals = [
         Meal(title: "Breakfast", name: "Omelette", imageName: "foodsample1", date: Date(), ingredients: ["Egg", "Cheese", "Tomato"]),
         Meal(title: "Lunch", name: "Grilled Chicken", imageName: "foodsample1", date: Date(), ingredients: ["Chicken", "Spices", "Olive Oil"]),
         Meal(title: "Dinner", name: "Pasta", imageName: "foodsample1", date: Date(), ingredients: ["Pasta", "Sauce", "Parmesan"])
     ]
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+    }
+    
+
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1 + meals.count
@@ -32,13 +43,9 @@ class HomeViewController: UITableViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    @IBAction func accountButtonTapped(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "goToAccount", sender: self)
     }
-    
-
     /*
     // MARK: - Navigation
 

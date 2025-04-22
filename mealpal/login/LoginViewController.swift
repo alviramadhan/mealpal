@@ -32,4 +32,14 @@ class LoginViewController: UIViewController {
         let imageName = loginPasswordTextField.isSecureTextEntry ? "eye.slash" : "eye"
         sender.setImage(UIImage(systemName: imageName), for: .normal)
     }
+    
+    @IBAction func loginPressed(_ sender: Any) {
+        
+        // programmatically navigate to HomeVC
+        let homeViewController = self.storyboard?.instantiateViewController(identifier: "HomeVC") as? UITabBarController
+            
+        self.view.window?.rootViewController = homeViewController
+        self.view.window?.makeKeyAndVisible()
+    }
+    
 }

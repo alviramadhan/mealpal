@@ -74,6 +74,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ResultTableViewCell", for: indexPath) as! ResultTableViewCell
             cell.SearchScMealNameLabel.text = meal.name
             cell.SearchScImageView.image = UIImage(named: meal.imageName)
+            
             return cell
             
             

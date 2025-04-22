@@ -11,6 +11,18 @@ class GroceryActionCell: UITableViewCell {
 
     @IBOutlet weak var GroceryCancelButton: UIButton!
     @IBOutlet weak var grocerySaveButton: UIButton!
+
+    var onSaveTapped: (() -> Void)?
+    var onCancelTapped: (() -> Void)?
+
+    @IBAction func saveTapped(_ sender: UIButton) {
+        onSaveTapped?()
+    }
+
+    @IBAction func cancelTapped(_ sender: UIButton) {
+        onCancelTapped?()
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
