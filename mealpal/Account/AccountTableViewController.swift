@@ -100,12 +100,16 @@ class AccountTableViewController: UITableViewController {
             cell.onLogoutTapped = {
                 do {
                     try Auth.auth().signOut()
+
                     if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        sceneDelegate.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+                        let loginVC = storyboard.instantiateViewController(withIdentifier: "SplashViewController")
+                        let navController = UINavigationController(rootViewController: loginVC)
+                        sceneDelegate.window?.rootViewController = navController
+                        sceneDelegate.window?.makeKeyAndVisible()
                     }
                 } catch let error {
-                    print(" Logout failed: \(error.localizedDescription)")
+                    print("Logout failed: \(error.localizedDescription)")
                 }
             }
             return cell
