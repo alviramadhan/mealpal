@@ -21,7 +21,7 @@ class EditMealTableViewController: UITableViewController {
         print("🧭 Editing meal with ID:", mealDocumentId)
         
         guard !mealDocumentId.isEmpty else {
-            print("❌ mealDocumentId is empty. Cannot fetch Firestore document.")
+            print("  mealDocumentId is empty. Cannot fetch Firestore document.")
             return
         }
         
@@ -106,7 +106,7 @@ class EditMealTableViewController: UITableViewController {
 
                 MealRepository.shared.updateMeal(id: self.mealDocumentId, with: updatedData) { error in
                     if let error = error {
-                        print("❌ Failed to update meal:", error.localizedDescription)
+                        print("  Failed to update meal:", error.localizedDescription)
                         return
                     }
 
@@ -116,7 +116,7 @@ class EditMealTableViewController: UITableViewController {
 
                     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
                         GroceryRepository.shared.addItems(self.ingredients, forUser: uid)
-                        self.showToast(message: "Grocery list updated ✅")
+                        self.showToast(message: "Grocery list updated ")
                         self.navigationController?.popViewController(animated: true)
                     }))
 

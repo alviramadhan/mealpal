@@ -69,7 +69,7 @@ class GroceryPopUpTableViewController: UITableViewController {
                   // Filter out any empty ingredients and trim whitespaces
                   let texts = self.inputTexts.map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
                   guard !texts.isEmpty else {
-                      print("❌ No ingredients to save.")
+                      print("  No ingredients to save.")
                       return
                   }  // Only save if there are valid ingredients
 

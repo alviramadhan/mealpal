@@ -25,10 +25,10 @@ class UserRepository {
     func signUpUser(email: String, password: String, name: String, completion: @escaping (Result<Void, Error>) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
             if let error = error {
-                print("❌ Firebase Auth sign-up failed:", error.localizedDescription)
+                print("  Firebase Auth sign-up failed:", error.localizedDescription)
                 completion(.failure(error))
             } else if let user = result?.user {
-                print("✅ Firebase Auth successful. UID:", user.uid, "Password stored securely in Firebase Auth.")
+                print("Firebase Auth successful. UID:", user.uid, "Password stored securely in Firebase Auth.")
                 let userData: [String: Any] = [
                     "uid": user.uid,
                     "email": email,
@@ -36,10 +36,10 @@ class UserRepository {
                 ]
                 Firestore.firestore().collection("users").document(user.uid).setData(userData) { error in
                     if let error = error {
-                        print("❌ Failed to save user to Firestore:", error.localizedDescription)
+                        print("  Failed to save user to Firestore:", error.localizedDescription)
                         completion(.failure(error))
                     } else {
-                        print("✅ User saved to Firestore:", userData)
+                        print(" User saved to Firestore:", userData)
                         completion(.success(()))
                     }
                 }

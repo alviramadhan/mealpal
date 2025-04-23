@@ -55,7 +55,7 @@ class GroceryViewController: UITableViewController {
                 let item = self.groceryItems[indexPath.row - 1]
                 GroceryRepository.shared.deleteItem(withId: item.id) { error in
                     if let error = error {
-                        print("❌ Failed to delete grocery item from Firestore:", error.localizedDescription)
+                        print("  Failed to delete grocery item from Firestore:", error.localizedDescription)
                         return
                     }
 

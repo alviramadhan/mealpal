@@ -79,7 +79,7 @@ class AccountTableViewController: UITableViewController {
                                        UserRepository.shared.updateUserCredentials(email: email, password: password, currentPassword: currentPassword) { error in
                                            if let error = error {
                                                self.showToast(message: "Update failed: \(error.localizedDescription)")
-                                               print("❌ Update failed: \(error.localizedDescription)")
+                                               print("  Update failed: \(error.localizedDescription)")
                                            } else {
                                                self.showToast(message: "Email and password updated.")
                                            }

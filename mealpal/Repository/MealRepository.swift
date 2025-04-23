@@ -144,9 +144,9 @@ class MealRepository {
 
         Firestore.firestore().collection("meals").addDocument(data: mealData) { error in
             if let error = error {
-                print("❌ Error assigning meal:", error.localizedDescription)
+                print("  Error assigning meal:", error.localizedDescription)
             } else {
-                print("✅ Meal assigned to \(meal.title) on \(date)")
+                print("Meal assigned to \(meal.title) on \(date)")
             }
             completion?(error)
         }
@@ -281,7 +281,7 @@ class MealRepository {
     func fetchMeal(withId id: String, completion: @escaping (Meal?) -> Void) {
         Firestore.firestore().collection("meals").document(id).getDocument { snapshot, error in
             guard let data = snapshot?.data() else {
-                print("❌ Firestore fetch error:", error?.localizedDescription ?? "No data")
+                print("  Firestore fetch error:", error?.localizedDescription ?? "No data")
                 completion(nil)
                 return
             }

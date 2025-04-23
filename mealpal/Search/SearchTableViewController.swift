@@ -18,13 +18,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         super.viewDidLoad()
         fetchUserMeals()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        if let searchCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? SearchBarTableViewCell {
-            searchCell.SearchScSearchBar.becomeFirstResponder()
-        }
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -40,21 +33,17 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             self.applyFilter()  // Apply any necessary filter if needed (like search text)
         }
     }
-    
 
-
-    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1;
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2 + filteredMeals.count
     }
-    
-    
+
     func applyFilter(withSearchText searchText: String = "") {
         guard let uid = Auth.auth().currentUser?.uid else { return }
 
@@ -75,8 +64,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         applyFilter(withSearchText: searchText)
     }
     
-    
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             // Search Bar
@@ -94,7 +81,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
                 self?.applyFilter()
             }
             return cell
-            
         } else {
             // Meal Result Cell
             let meal = filteredMeals[indexPath.row - 2]
@@ -107,24 +93,48 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
                 self.performSegue(withIdentifier: "EditMealSegue", sender: meal)
             }
             
+//            // Swipe to delete functionality
+//            cell.onDeleteTapped = { [weak self] in
+//                guard let self = self else { return }
+//                let meal = self.filteredMeals[indexPath.row - 2]
+//                self.deleteMealFromRepository(meal: meal, at: indexPath)
+//            }
+//            
             return cell
-            
-            
         }
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.row >= 2 else { return }
 
-        let meal = filteredMeals[indexPath.row - 2]
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let editVC = storyboard.instantiateViewController(withIdentifier: "EditMealTableViewController") as! EditMealTableViewController
-        print("📦 Passing meal ID to edit screen:", meal.id)
-        editVC.mealDocumentId = meal.id
-        print("📦 Passing meal ID to edit screen:", meal.id)
-        self.navigationController?.pushViewController(editVC, animated: true)
+    // Swipe to delete functionality
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let meal = filteredMeals[indexPath.row - 2]
+            deleteMealFromRepository(meal: meal, at: indexPath)
+        }
     }
 
+    // Delete meal from repository and Firestore
+    func deleteMealFromRepository(meal: Meal, at indexPath: IndexPath) {
+        MealRepository.shared.deleteMeal(withId: meal.id) { error in
+            if let error = error {
+                print(" Failed to delete meal from Firestore:", error.localizedDescription)
+                return
+            }
+            self.filteredMeals.remove(at: indexPath.row - 2)  // Adjust the index correctly
+            self.tableView.beginUpdates()
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.tableView.endUpdates()
+        }
+    }
+
+    // MARK: - Navigation for Editing
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "EditMealSegue",
+           let destination = segue.destination as? EditMealTableViewController,
+           let meal = sender as? Meal {
+            destination.mealDocumentId = meal.id
+        }
+    }
+}
         
     /*
      // Override to support conditional editing of the table view.
@@ -168,14 +178,4 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
      }
      */
     
-    // MARK: - Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "EditMealSegue",
-           let destination = segue.destination as? EditMealTableViewController,
-           let meal = sender as? Meal {
-            destination.mealDocumentId = meal.id
-        }
-    }
-    
-}
+

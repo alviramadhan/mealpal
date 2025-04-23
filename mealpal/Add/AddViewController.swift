@@ -147,13 +147,13 @@ func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMe
 
             imageRef.putData(imageData, metadata: nil) { metadata, error in
                 if let error = error {
-                    print("❌ Image upload failed:", error.localizedDescription)
+                    print("  Image upload failed:", error.localizedDescription)
                     return
                 }
 
                 imageRef.downloadURL { url, error in
                     guard let imageUrl = url?.absoluteString else {
-                        print("❌ Failed to get image URL")
+                        print("  Failed to get image URL")
                         return
                     }
 
@@ -169,7 +169,7 @@ func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMe
                         template: false // Assigned meal
                     ), imageUrl: imageUrl) { error in
                         if let error = error {
-                            print("❌ Error saving assigned meal:", error.localizedDescription)
+                            print("  Error saving assigned meal:", error.localizedDescription)
                         } else {
                             // Add ingredients to groceryItems collection after meal is saved
                             self.addIngredientsToGrocery(ingredients: filteredIngredients)
@@ -180,7 +180,7 @@ func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMe
             }
         } else {
             // Default placeholder image URL if no image was selected
-            let placeholderUrl = "https://via.placeholder.com/150"
+            let placeholderUrl = "assets/foodplaceholder.png"
             MealRepository.shared.saveAssignedMeal(meal: Meal(
                 id: mealId,
                 userId: uid,
@@ -192,7 +192,7 @@ func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMe
                 template: false // Assigned meal
             ), imageUrl: placeholderUrl) { error in
                 if let error = error {
-                    print("❌ Error saving assigned meal:", error.localizedDescription)
+                    print("  Error saving assigned meal:", error.localizedDescription)
                 } else {
                     // Add ingredients to groceryItems collection after meal is saved
                     self.addIngredientsToGrocery(ingredients: filteredIngredients)
@@ -246,9 +246,9 @@ func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMe
             // Save the new template meal
             MealRepository.shared.saveTemplateMeal(meal: templateMeal, imageUrl: meal.imageName) { error in
                 if let error = error {
-                    print("❌ Error saving template meal:", error.localizedDescription)
+                    print("  Error saving template meal:", error.localizedDescription)
                 } else {
-                    print("✅ Template meal saved successfully!")
+                    print(" Template meal saved successfully!")
                 }
             }
         }
@@ -269,7 +269,7 @@ func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMe
         
         MealRepository.shared.saveAssignedMeal(meal: meal, imageUrl: imageUrl) { error in
             if let error = error {
-                print("❌ Failed to save assigned meal to Firestore:", error.localizedDescription)
+                print("  Failed to save assigned meal to Firestore:", error.localizedDescription)
                 return
             }
             

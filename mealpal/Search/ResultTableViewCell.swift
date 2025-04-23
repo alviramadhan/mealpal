@@ -17,6 +17,8 @@ class ResultTableViewCell: UITableViewCell {
         // Initialization code
     }
     
+    
+    
     var onEditTapped: (() -> Void)?
     @IBAction func editButtonPressed(_ sender: UIButton) {
         onEditTapped?()

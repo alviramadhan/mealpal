@@ -49,9 +49,9 @@ class GroceryRepository {
             let groceryData: [String: Any] = ["name": item, "userId": uid]
             db.collection("groceryItems").addDocument(data: groceryData) { error in
                 if let error = error {
-                    print("❌ Failed to add grocery item:", error.localizedDescription)
+                    print("  Failed to add grocery item:", error.localizedDescription)
                 } else {
-                    print("✅ Successfully added grocery item: \(item)")
+                    print(" Successfully added grocery item: \(item)")
                 }
             }
         }
