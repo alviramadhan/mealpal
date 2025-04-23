@@ -64,7 +64,7 @@ class CalendarViewController: UITableViewController {
     func reloadMeals() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
 
-        MealRepository.shared.fetchAssignedMeals(forUserId: uid) { meals in
+        MealRepository.shared.fetchAssignedMeals(forUserId: uid, onDate: selectedDate) { meals in
             self.meals = meals
             DispatchQueue.main.async {
                 self.tableView.reloadData()

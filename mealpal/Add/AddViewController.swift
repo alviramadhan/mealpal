@@ -120,9 +120,9 @@ func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMe
         // If user has selected an image, upload it. Otherwise use a default placeholder URL.
         if let image = selectedImage,
            let imageData = image.jpegData(compressionQuality: 0.8) {
-            
+
             let imageRef = Storage.storage().reference().child("meal_images/\(mealId).jpg")
-            
+
             imageRef.putData(imageData, metadata: nil) { metadata, error in
                 if let error = error {
                     print("❌ Image upload failed:", error.localizedDescription)
@@ -149,6 +149,8 @@ func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMe
                         if let error = error {
                             print("❌ Error saving assigned meal:", error.localizedDescription)
                         } else {
+                            // Add ingredients to groceryItems collection after meal is saved
+                            self.addIngredientsToGrocery(ingredients: filteredIngredients)
                             self.showTemplateConversionAlert()  // After saving, ask user if they want to create a template
                         }
                     }
@@ -170,10 +172,18 @@ func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMe
                 if let error = error {
                     print("❌ Error saving assigned meal:", error.localizedDescription)
                 } else {
+                    // Add ingredients to groceryItems collection after meal is saved
+                    self.addIngredientsToGrocery(ingredients: filteredIngredients)
                     self.showTemplateConversionAlert()  // After saving, ask user if they want to create a template
                 }
             }
         }
+    }
+
+    // Add ingredients to groceryItems collection
+    func addIngredientsToGrocery(ingredients: [String]) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        GroceryRepository.shared.addItems(ingredients, forUser: uid)
     }
 
     // MARK: - Template Conversion Alert

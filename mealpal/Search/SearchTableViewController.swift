@@ -34,10 +34,11 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     func fetchUserMeals() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
 
-           MealRepository.shared.fetchAssignedMeals(forUserId: uid) { meals in
-               self.allMeals = meals
-               self.applyFilter()
-           }
+        // Fetch all meals (both assigned and template) for the logged-in user
+        MealRepository.shared.fetchMeals(forUserId: uid) { meals in
+            self.allMeals = meals
+            self.applyFilter()  // Apply any necessary filter if needed (like search text)
+        }
     }
     
 
@@ -57,12 +58,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     func applyFilter(withSearchText searchText: String = "") {
         guard let uid = Auth.auth().currentUser?.uid else { return }
 
-        let baseFiltered: [Meal]
-        if selectedSegment == 0 {
-            baseFiltered = allMeals.filter { $0.userId == uid }
-        } else {
-            baseFiltered = allMeals.filter { $0.userId != uid }
-        }
+        // Show all meals for the current user
+        let baseFiltered: [Meal] = allMeals.filter { $0.userId == uid }
 
         if searchText.isEmpty {
             filteredMeals = baseFiltered

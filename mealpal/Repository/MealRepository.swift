@@ -173,11 +173,15 @@ class MealRepository {
             }
     }
 
-    // Fetch assigned meals (not templates) for a user
-    func fetchAssignedMeals(forUserId uid: String, completion: @escaping ([Meal]) -> Void) {
+    // Fetch assigned meals (not templates) for a user filtered by date
+    func fetchAssignedMeals(forUserId uid: String, onDate date: Date, completion: @escaping ([Meal]) -> Void) {
+        let startOfDay = Calendar.current.startOfDay(for: date)
+        let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
+        
         Firestore.firestore().collection("meals")
             .whereField("userId", isEqualTo: uid)
-            .whereField("isTemplate", isEqualTo: false)  // Only fetch assigned meals (not templates)
+            .whereField("date", isGreaterThanOrEqualTo: startOfDay)
+            .whereField("date", isLessThan: endOfDay)  // Fetch meals for the specific date range
             .getDocuments { snapshot, error in
                 let meals: [Meal] = snapshot?.documents.compactMap { doc in
                     let data = doc.data()
@@ -189,7 +193,7 @@ class MealRepository {
                         imageName: data["imageName"] as? String ?? "",
                         date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
                         ingredients: data["ingredients"] as? [String] ?? [],
-                        template: false
+                        template: data["isTemplate"] as? Bool ?? false
                     )
                 } ?? []
                 completion(meals)
@@ -264,7 +268,7 @@ class MealRepository {
             "imageName": imageUrl,
             "ingredients": meal.ingredients,
             "date": Timestamp(date: meal.date),
-            "isTemplate": meal.template  
+            "isTemplate": meal.template
         ]
         Firestore.firestore().collection("meals").addDocument(data: assignedData) { error in
             completion?(error)
@@ -288,7 +292,7 @@ class MealRepository {
                 imageName: data["imageName"] as? String ?? "",
                 date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
                 ingredients: data["ingredients"] as? [String] ?? [],
-                template: data["isTemplate"] as? Bool ?? false  
+                template: data["isTemplate"] as? Bool ?? false
             )
             completion(meal)
         }
@@ -298,6 +302,28 @@ class MealRepository {
         Firestore.firestore().collection("meals").document(id).updateData(data, completion: completion)
     }
     
+    // Updated method to fetch all meals for a specific user (both assigned and template)
+    func fetchMeals(forUserId uid: String, completion: @escaping ([Meal]) -> Void) {
+        Firestore.firestore().collection("meals")
+            .whereField("userId", isEqualTo: uid)  // Fetch all meals for this user
+            .getDocuments { snapshot, error in
+                let meals: [Meal] = snapshot?.documents.compactMap { doc in
+                    let data = doc.data()
+                    return Meal(
+                        id: doc.documentID,
+                        userId: uid,
+                        title: data["title"] as? String ?? "",
+                        name: data["name"] as? String ?? "",
+                        imageName: data["imageName"] as? String ?? "",
+                        date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
+                        ingredients: data["ingredients"] as? [String] ?? [],
+                        template: data["isTemplate"] as? Bool ?? false  // Add this field to mark the meal as a template or not
+                    )
+                } ?? []
+                completion(meals)
+            }
+    }
+
     func fetchUserMeals(completion: @escaping ([Meal]) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else {
             completion([])
