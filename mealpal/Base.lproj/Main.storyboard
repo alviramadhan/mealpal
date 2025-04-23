@@ -1192,18 +1192,18 @@
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MealSwitchTableViewCell" id="pDt-DW-HLU" customClass="MealSwitchTableViewCell" customModule="mealpal" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="126" width="320" height="51"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pDt-DW-HLU" id="ObB-J3-eVD" customClass="SearchBarTableViewCell" customModule="mealpal" customModuleProvider="target">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pDt-DW-HLU" id="ObB-J3-eVD" customClass="SearchBarTableViewCell" customModule="mealpal" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="51"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="0wS-Ts-OhS">
-                                            <rect key="frame" x="50" y="10" width="220" height="31"/>
+                                        <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0wS-Ts-OhS">
+                                            <rect key="frame" x="16" y="0.0" width="752" height="31"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="0HY-3x-s7O">
-                                                    <rect key="frame" x="100" y="0.0" width="20" height="31"/>
+                                                <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="center" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="0HY-3x-s7O">
+                                                    <rect key="frame" x="45" y="0.0" width="120" height="31"/>
                                                     <subviews>
-                                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ESa-nc-88a">
-                                                            <rect key="frame" x="0.0" y="0.0" width="20" height="32"/>
+                                                        <segmentedControl opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ESa-nc-88a">
+                                                            <rect key="frame" x="140" y="0.0" width="0.0" height="32"/>
                                                             <segments>
                                                                 <segment title="My Meal"/>
                                                                 <segment title="Explore"/>
@@ -1214,14 +1214,18 @@
                                                             </connections>
                                                         </segmentedControl>
                                                     </subviews>
+                                                    <color key="backgroundColor" name="BackgroundLight"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="ESa-nc-88a" secondAttribute="trailing" constant="100" id="aQB-0u-NDx"/>
+                                                        <constraint firstItem="ESa-nc-88a" firstAttribute="leading" secondItem="0HY-3x-s7O" secondAttribute="leading" constant="140" id="ooF-lu-7US"/>
+                                                    </constraints>
                                                 </stackView>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <color key="backgroundColor" name="BackgroundLight"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="300" id="BNr-RA-63U"/>
                                                 <constraint firstAttribute="bottom" secondItem="0HY-3x-s7O" secondAttribute="bottom" id="U3k-17-b5D"/>
-                                                <constraint firstAttribute="trailing" secondItem="0HY-3x-s7O" secondAttribute="trailing" constant="100" id="bjC-aX-rI5"/>
-                                                <constraint firstItem="0HY-3x-s7O" firstAttribute="leading" secondItem="0wS-Ts-OhS" secondAttribute="leading" constant="100" id="nfJ-og-c97"/>
+                                                <constraint firstAttribute="trailing" secondItem="0HY-3x-s7O" secondAttribute="trailing" id="bjC-aX-rI5"/>
+                                                <constraint firstItem="0HY-3x-s7O" firstAttribute="leading" secondItem="0wS-Ts-OhS" secondAttribute="leading" id="nfJ-og-c97"/>
                                                 <constraint firstItem="0HY-3x-s7O" firstAttribute="top" secondItem="0wS-Ts-OhS" secondAttribute="top" id="xb3-C9-vuC"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
@@ -1229,10 +1233,11 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
+                                    <color key="backgroundColor" name="BackgroundLight"/>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="0wS-Ts-OhS" secondAttribute="trailing" constant="50" id="BUx-o1-vIp"/>
+                                        <constraint firstAttribute="trailing" secondItem="0wS-Ts-OhS" secondAttribute="trailing" id="BUx-o1-vIp"/>
                                         <constraint firstAttribute="bottom" secondItem="0wS-Ts-OhS" secondAttribute="bottom" constant="10" id="Set-Y6-xmi"/>
-                                        <constraint firstItem="0wS-Ts-OhS" firstAttribute="leading" secondItem="ObB-J3-eVD" secondAttribute="leading" constant="50" id="Zrw-ba-rZO"/>
+                                        <constraint firstItem="0wS-Ts-OhS" firstAttribute="leading" secondItem="ObB-J3-eVD" secondAttribute="leading" constant="200" id="Zrw-ba-rZO"/>
                                         <constraint firstItem="0wS-Ts-OhS" firstAttribute="top" secondItem="ObB-J3-eVD" secondAttribute="top" constant="10" id="pvA-Ok-o7q"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -1964,9 +1969,6 @@
         <namedColor name="WidgetBackground">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="tintColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
