@@ -126,7 +126,7 @@ class CalendarViewController: UITableViewController {
                         let imageName = data["imageName"] as? String ?? ""
                         let ingredients = data["ingredients"] as? [String] ?? []
                         let meal = Meal(
-                            id: doc.documentID,
+                            id: UUID().uuidString, // generate a temp ID to avoid using the original Firestore ID
                             userId: uid,
                             title: type,
                             name: mealName,
@@ -161,6 +161,23 @@ class CalendarViewController: UITableViewController {
             } else {
                 print("✅ Meal assigned to \(type) on \(date)")
                 self.reloadMeals()
+            }
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard indexPath.row >= 2 else { return } // Skip non-meal rows
+
+        if editingStyle == .delete {
+            let meal = meals[indexPath.row - 2]
+            Firestore.firestore().collection("meals").document(meal.id).delete { error in
+                if let error = error {
+                    print("❌ Failed to delete meal:", error.localizedDescription)
+                } else {
+                    print("🗑️ Deleted meal:", meal.name)
+                    self.meals.remove(at: indexPath.row - 2)
+                    self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                }
             }
         }
     }

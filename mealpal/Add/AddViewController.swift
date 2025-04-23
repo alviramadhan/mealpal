@@ -130,6 +130,18 @@ class AddViewController: UITableViewController, UIImagePickerControllerDelegate,
     }
 
     private func saveMealToFirestore(uid: String, imageUrl: String, ingredients: [String]) {
+        // Save as template
+        let templateRef = Firestore.firestore().collection("meals").document()
+        let templateData: [String: Any] = [
+            "userId": uid,
+            "title": selectedTitle,
+            "name": mealName,
+            "imageName": imageUrl,
+            "ingredients": ingredients,
+            "isTemplate": true
+        ]
+        templateRef.setData(templateData)
+
         let ref = Firestore.firestore().collection("meals").document()
         let mealData: [String: Any] = [
             "userId": uid,
@@ -137,7 +149,8 @@ class AddViewController: UITableViewController, UIImagePickerControllerDelegate,
             "name": mealName,
             "imageName": imageUrl,
             "date": Timestamp(date: selectedDate),
-            "ingredients": ingredients
+            "ingredients": ingredients,
+            "isTemplate": false
         ]
 
         ref.setData(mealData) { error in
