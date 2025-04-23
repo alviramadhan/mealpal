@@ -21,32 +21,12 @@ class HomeViewController: UITableViewController {
     }
     
     func fetchMealsFromFirestore() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-
-        let calendar = Calendar.current
-        let startOfToday = calendar.startOfDay(for: Date())
-        let endOfToday = calendar.date(byAdding: .day, value: 1, to: startOfToday)!
-
-        Firestore.firestore().collection("meals")
-            .whereField("userId", isEqualTo: uid)
-            .whereField("date", isGreaterThanOrEqualTo: Timestamp(date: startOfToday))
-            .whereField("date", isLessThan: Timestamp(date: endOfToday))
-            .getDocuments { snapshot, error in
-                if let docs = snapshot?.documents {
-                    self.meals = docs.compactMap { doc in
-                        let data = doc.data()
-                        return Meal(
-                            id: doc.documentID, userId: uid,
-                            title: data["title"] as? String ?? "",
-                            name: data["name"] as? String ?? "",
-                            imageName: data["imageName"] as? String ?? "",
-                            date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
-                            ingredients: data["ingredients"] as? [String] ?? []
-                        )
-                    }
-                    self.tableView.reloadData()
-                }
+        MealRepository.shared.fetchMealsForToday { meals in
+            self.meals = meals
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

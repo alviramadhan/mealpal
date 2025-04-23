@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseFirestore
 
 class GroceryPopUpTableViewController: UITableViewController {
 
@@ -78,12 +77,7 @@ class GroceryPopUpTableViewController: UITableViewController {
                 guard !texts.isEmpty else { return }
 
                 guard let uid = Auth.auth().currentUser?.uid else { return }
-                let db = Firestore.firestore()
-
-                for text in texts {
-                    let groceryData: [String: Any] = ["name": text, "userId": uid]
-                    db.collection("groceryItems").addDocument(data: groceryData)
-                }
+                GroceryRepository.shared.addItems(texts, forUser: uid)
 
                 self.dismiss(animated: true)
             }

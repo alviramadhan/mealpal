@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseFirestore
 
 class GroceryViewController: UITableViewController {
     
@@ -26,18 +25,10 @@ class GroceryViewController: UITableViewController {
     }
 
     func fetchGroceryItems() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        Firestore.firestore().collection("groceryItems")
-            .whereField("userId", isEqualTo: uid)
-            .getDocuments { snapshot, error in
-                if let docs = snapshot?.documents {
-                    self.groceryItems = docs.compactMap { doc in
-                        let data = doc.data()
-                        return GroceryItem(id: doc.documentID, name: data["name"] as? String ?? "")
-                    }
-                    self.tableView.reloadData()
-                }
-            }
+        GroceryRepository.shared.fetchItems { items in
+            self.groceryItems = items
+            self.tableView.reloadData()
+        }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -62,7 +53,7 @@ class GroceryViewController: UITableViewController {
             cell.onDeleteTapped = { [weak self] in
                 guard let self = self else { return }
                 let item = self.groceryItems[indexPath.row - 1]
-                Firestore.firestore().collection("groceryItems").document(item.id).delete { error in
+                GroceryRepository.shared.deleteItem(withId: item.id) { error in
                     if let error = error {
                         print("❌ Failed to delete grocery item from Firestore:", error.localizedDescription)
                         return

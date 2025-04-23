@@ -40,7 +40,7 @@ class LoginViewController: UIViewController {
             return
         }
 
-        Repository().loginUser(email: email, password: password) { result in
+        UserRepository.shared.loginUser(email: email, password: password) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(_):

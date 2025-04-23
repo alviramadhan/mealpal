@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseFirestore
 
 class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     
@@ -33,26 +32,10 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     func fetchUserMeals() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        Firestore.firestore().collection("meals")
-            .whereField("userId", isEqualTo: uid)
-            .getDocuments { snapshot, error in
-                if let docs = snapshot?.documents {
-                    self.allMeals = docs.compactMap { doc in
-                        let data = doc.data()
-                        return Meal(
-                            id: doc.documentID,
-                            userId: uid,
-                            title: data["title"] as? String ?? "",
-                            name: data["name"] as? String ?? "",
-                            imageName: data["imageName"] as? String ?? "",
-                            date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
-                            ingredients: data["ingredients"] as? [String] ?? []
-                        )
-                    }
-                    self.applyFilter()
-                }
-            }
+        MealRepository.shared.fetchUserMeals { meals in
+            self.allMeals = meals
+            self.applyFilter()
+        }
     }
     
     // MARK: - Table view data source

@@ -63,7 +63,7 @@ class SignUpViewController: UIViewController {
             return
         }
 
-        Repository().signUpUser(email: email, password: password, name: name) { result in
+        UserRepository.shared.signUpUser(email: email, password: password, name: name) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success:

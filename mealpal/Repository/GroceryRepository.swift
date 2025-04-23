@@ -6,21 +6,39 @@
 //
 
 import Foundation
+import FirebaseFirestore
+import FirebaseAuth
+
 class GroceryRepository {
     static let shared = GroceryRepository()
     private init() {}
 
-    var items: [GroceryItem] = []
+    func fetchItems(completion: @escaping ([GroceryItem]) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            completion([])
+            return
+        }
 
-    func add(_ item: GroceryItem) {
-        items.append(item)
+        Firestore.firestore().collection("groceryItems")
+            .whereField("userId", isEqualTo: uid)
+            .getDocuments { snapshot, error in
+                let items = snapshot?.documents.compactMap { doc -> GroceryItem? in
+                    let data = doc.data()
+                    return GroceryItem(id: doc.documentID, name: data["name"] as? String ?? "")
+                } ?? []
+                completion(items)
+            }
     }
 
-    func remove(at index: Int) {
-        items.remove(at: index)
+    func deleteItem(withId id: String, completion: ((Error?) -> Void)? = nil) {
+        Firestore.firestore().collection("groceryItems").document(id).delete(completion: completion)
     }
 
-    func clear() {
-        items.removeAll()
+    func addItems(_ items: [String], forUser uid: String) {
+        let db = Firestore.firestore()
+        for item in items {
+            let groceryData: [String: Any] = ["name": item, "userId": uid]
+            db.collection("groceryItems").addDocument(data: groceryData)
+        }
     }
 }

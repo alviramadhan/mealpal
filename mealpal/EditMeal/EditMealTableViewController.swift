@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseFirestore
 
 class EditMealTableViewController: UITableViewController {
     var mealImage: UIImage?
@@ -26,27 +25,14 @@ class EditMealTableViewController: UITableViewController {
             return
         }
         
-        guard (Auth.auth().currentUser?.uid) != nil else { return }
-
-        Firestore.firestore().collection("meals").document(mealDocumentId)
-            .getDocument { snapshot, error in
-                if let error = error {
-                    print("❌ Firestore fetch error:", error.localizedDescription)
-                }
-
-                if let data = snapshot?.data() {
-                    print("✅ Firestore data fetched:", data)
-                    self.mealName = data["name"] as? String ?? ""
-                    self.ingredients = data["ingredients"] as? [String] ?? []
-                    print("🧪 Parsed meal name:", self.mealName)
-                    print("🧪 Parsed ingredients:", self.ingredients)
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                } else {
-                    print("⚠️ No data found for mealDocumentId:", self.mealDocumentId)
-                }
+        MealRepository.shared.fetchMeal(withId: mealDocumentId) { meal in
+            guard let meal = meal else { return }
+            self.mealName = meal.name
+            self.ingredients = meal.ingredients
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
+        }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -113,37 +99,32 @@ class EditMealTableViewController: UITableViewController {
                     }
                 }
 
-                // Assuming you're editing an existing meal and you have its ID
                 let updatedData: [String: Any] = [
                     "name": self.mealName,
                     "ingredients": self.ingredients,
                 ]
 
-                Firestore.firestore().collection("meals").document(self.mealDocumentId).updateData(updatedData) { error in
+                MealRepository.shared.updateMeal(id: self.mealDocumentId, with: updatedData) { error in
                     if let error = error {
                         print("❌ Failed to update meal:", error.localizedDescription)
-                    } else {
-                        print("✅ Meal updated.")
-
-                        let alert = UIAlertController(title: "Update Grocery List?",
-                                                      message: "Do you also want to update your grocery list with these ingredients?",
-                                                      preferredStyle: .alert)
-
-                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-                            for item in self.ingredients {
-                                let groceryData: [String: Any] = ["name": item, "userId": uid]
-                                Firestore.firestore().collection("groceryItems").addDocument(data: groceryData)
-                            }
-                            self.showToast(message: "Grocery list updated ✅")
-                            self.navigationController?.popViewController(animated: true)
-                        }))
-
-                        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { _ in
-                            self.navigationController?.popViewController(animated: true)
-                        }))
-
-                        self.present(alert, animated: true)
+                        return
                     }
+
+                    let alert = UIAlertController(title: "Update Grocery List?",
+                                                  message: "Do you also want to update your grocery list with these ingredients?",
+                                                  preferredStyle: .alert)
+
+                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+                        GroceryRepository.shared.addItems(self.ingredients, forUser: uid)
+                        self.showToast(message: "Grocery list updated ✅")
+                        self.navigationController?.popViewController(animated: true)
+                    }))
+
+                    alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    }))
+
+                    self.present(alert, animated: true)
                 }
             }
             return cell

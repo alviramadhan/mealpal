@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseFirestore
 
 class CalendarViewController: UITableViewController {
     
@@ -63,30 +62,12 @@ class CalendarViewController: UITableViewController {
     }
     
     func reloadMeals() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        let startOfDay = Calendar.current.startOfDay(for: selectedDate)
-        let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
-
-        Firestore.firestore().collection("meals")
-            .whereField("userId", isEqualTo: uid)
-            .whereField("date", isGreaterThanOrEqualTo: Timestamp(date: startOfDay))
-            .whereField("date", isLessThan: Timestamp(date: endOfDay))
-            .getDocuments { snapshot, error in
-                if let docs = snapshot?.documents {
-                    self.meals = docs.compactMap { doc in
-                        let data = doc.data()
-                        return Meal(
-                            id: doc.documentID, userId: uid,
-                            title: data["title"] as? String ?? "",
-                            name: data["name"] as? String ?? "",
-                            imageName: data["imageName"] as? String ?? "",
-                            date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
-                            ingredients: data["ingredients"] as? [String] ?? []
-                        )
-                    }
-                    self.tableView.reloadData()
-                }
+        MealRepository.shared.fetchMeals(for: selectedDate) { meals in
+            self.meals = meals
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
+        }
     }
 
     override func viewDidLoad() {
@@ -114,52 +95,31 @@ class CalendarViewController: UITableViewController {
     
     func presentMealSelection(for type: String) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let picker = UIAlertController(title: "Select a \(type)", message: nil, preferredStyle: .alert)
 
-        Firestore.firestore().collection("meals")
-            .whereField("userId", isEqualTo: uid)
-            .getDocuments { snapshot, error in
-                if let docs = snapshot?.documents {
-                    for doc in docs {
-                        let data = doc.data()
-                        let mealName = data["name"] as? String ?? ""
-                        let imageName = data["imageName"] as? String ?? ""
-                        let ingredients = data["ingredients"] as? [String] ?? []
-                        let meal = Meal(
-                            id: UUID().uuidString, // generate a temp ID to avoid using the original Firestore ID
-                            userId: uid,
-                            title: type,
-                            name: mealName,
-                            imageName: imageName,
-                            date: Date(),
-                            ingredients: ingredients
-                        )
-                        picker.addAction(UIAlertAction(title: meal.name, style: .default) { _ in
-                            self.assignMeal(meal, to: self.selectedDate, as: type)
-                        })
-                    }
-                    picker.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-                    self.present(picker, animated: true)
-                }
+        MealRepository.shared.fetchTemplateMeals(forUserId: uid) { meals in
+            let picker = UIAlertController(title: "Select a \(type)", message: nil, preferredStyle: .alert)
+            for meal in meals {
+                picker.addAction(UIAlertAction(title: meal.name, style: .default) { _ in
+                    let copiedMeal = Meal(
+                        id: UUID().uuidString,
+                        userId: meal.userId,
+                        title: type,
+                        name: meal.name,
+                        imageName: meal.imageName,
+                        date: self.selectedDate,
+                        ingredients: meal.ingredients
+                    )
+                    self.assignMeal(copiedMeal, to: self.selectedDate, as: type)
+                })
             }
+            picker.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            self.present(picker, animated: true)
+        }
     }
 
     func assignMeal(_ meal: Meal, to date: Date, as type: String) {
-        let uid = Auth.auth().currentUser?.uid ?? ""
-        let mealData: [String: Any] = [
-            "userId": uid,
-            "title": type,
-            "name": meal.name,
-            "imageName": meal.imageName,
-            "date": Timestamp(date: date),
-            "ingredients": meal.ingredients
-        ]
-
-        Firestore.firestore().collection("meals").addDocument(data: mealData) { error in
-            if let error = error {
-                print("❌ Error assigning meal:", error.localizedDescription)
-            } else {
-                print("✅ Meal assigned to \(type) on \(date)")
+        MealRepository.shared.assignMeal(meal, for: date) { error in
+            if error == nil {
                 self.reloadMeals()
             }
         }
@@ -170,11 +130,8 @@ class CalendarViewController: UITableViewController {
 
         if editingStyle == .delete {
             let meal = meals[indexPath.row - 2]
-            Firestore.firestore().collection("meals").document(meal.id).delete { error in
-                if let error = error {
-                    print("❌ Failed to delete meal:", error.localizedDescription)
-                } else {
-                    print("🗑️ Deleted meal:", meal.name)
+            MealRepository.shared.deleteMeal(withId: meal.id) { error in
+                if error == nil {
                     self.meals.remove(at: indexPath.row - 2)
                     self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 }
