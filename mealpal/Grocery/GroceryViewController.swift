@@ -68,4 +68,19 @@ class GroceryViewController: UITableViewController {
             return cell
         }
     }
+
+    // MARK: - Present Pop-up to Add New Items to the Grocery List
+    @IBAction func addButtonTapped(_ sender: UIBarButtonItem) {
+        // Present the GroceryPopUpTableViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let groceryPopUp = storyboard.instantiateViewController(withIdentifier: "GroceryPopUpTableViewController") as? GroceryPopUpTableViewController else {
+            return
+        }
+        groceryPopUp.onSave = { [weak self] _ in
+            // Fetch the updated list of grocery items
+            self?.fetchGroceryItems()
+        }
+        let navigationController = UINavigationController(rootViewController: groceryPopUp)
+        present(navigationController, animated: true, completion: nil)
+    }
 }
