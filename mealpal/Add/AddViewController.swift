@@ -180,7 +180,7 @@ func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMe
             }
         } else {
             // Default placeholder image URL if no image was selected
-            let placeholderUrl = "assets/foodplaceholder.png"
+            let placeholderUrl = "foodplaceholder"
             MealRepository.shared.saveAssignedMeal(meal: Meal(
                 id: mealId,
                 userId: uid,
