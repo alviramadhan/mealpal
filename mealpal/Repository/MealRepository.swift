@@ -138,7 +138,8 @@ class MealRepository {
             "name": meal.name,
             "imageName": meal.imageName,
             "date": Timestamp(date: date),
-            "ingredients": meal.ingredients
+            "ingredients": meal.ingredients,
+            "isTemplate": meal.template // Assigned meal
         ]
 
         Firestore.firestore().collection("meals").addDocument(data: mealData) { error in
@@ -154,7 +155,7 @@ class MealRepository {
     func fetchTemplateMeals(forUserId uid: String, completion: @escaping ([Meal]) -> Void) {
         Firestore.firestore().collection("meals")
             .whereField("userId", isEqualTo: uid)
-            .whereField("isTemplate", isEqualTo: true)
+            .whereField("isTemplate", isEqualTo: false)
             .getDocuments { snapshot, error in
                 let meals: [Meal] = snapshot?.documents.compactMap { doc in
                     let data = doc.data()

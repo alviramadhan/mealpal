@@ -111,7 +111,7 @@ class CalendarViewController: UITableViewController {
                         imageName: meal.imageName,
                         date: self.selectedDate,
                         ingredients: meal.ingredients,
-                        template: true // Set template to true for template meals
+                        template: false // 
                     )
                     self.assignMeal(copiedMeal, to: self.selectedDate, as: type)
                 })
