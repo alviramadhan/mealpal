@@ -13,11 +13,11 @@ import FirebaseStorage //image upload
 class AddViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     private func clearForm() {
+        // Clear ingredients and other fields, but leave mealName and selectedTitle intact
         ingredients = [""]
-        mealName = ""
         selectedImage = nil
         selectedDate = Date()
-        selectedTitle = "Breakfast"
+        // Do not reset mealName or selectedTitl so they stay intact
         tableView.reloadData()
     }
     
@@ -173,7 +173,7 @@ func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMe
                         } else {
                             // Add ingredients to groceryItems collection after meal is saved
                             self.addIngredientsToGrocery(ingredients: filteredIngredients)
-                            self.showTemplateConversionAlert()  // After saving, ask user if they want to create a template
+                         //   self.showTemplateConversionAlert()  // After saving, ask user if they want to create a template
                         }
                     }
                 }

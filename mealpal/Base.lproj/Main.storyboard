@@ -346,14 +346,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="mealCell" id="95k-u5-79l" customClass="MealCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="221" width="320" height="232"/>
+                                <rect key="frame" x="0.0" y="221" width="320" height="236.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="95k-u5-79l" id="qM3-2U-kfI">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="232"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="236.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="le3-GA-3Ns">
-                                            <rect key="frame" x="26" y="12" width="268" height="208"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="le3-GA-3Ns">
+                                            <rect key="frame" x="26" y="12" width="268" height="212.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="BreakFast" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KG8-e2-Nuy" userLabel="Home Meal Title">
                                                     <rect key="frame" x="0.0" y="0.0" width="82" height="20.5"/>
@@ -362,13 +362,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MealName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cpu-Yd-RSB">
-                                                    <rect key="frame" x="0.0" y="28.5" width="84.5" height="21"/>
+                                                    <rect key="frame" x="0.0" y="31" width="84.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <color key="textColor" name="SecondaryText"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DcL-gb-qF2">
-                                                    <rect key="frame" x="0.0" y="57.5" width="268" height="150.5"/>
+                                                    <rect key="frame" x="0.0" y="62" width="268" height="150.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="DcL-gb-qF2" secondAttribute="height" multiplier="16:9" id="cOG-dZ-m07"/>
                                                     </constraints>
@@ -510,17 +510,17 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddMealNameCell" id="eEg-vm-vRZ" customClass="AddMealNameCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="261.5" width="320" height="138"/>
+                                <rect key="frame" x="0.0" y="261.5" width="320" height="139"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eEg-vm-vRZ" id="75r-of-o1L">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="138"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="139"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="0Jd-2a-pTt">
-                                            <rect key="frame" x="20" y="0.0" width="280" height="138"/>
+                                            <rect key="frame" x="20" y="0.0" width="280" height="139"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add Meal Name Here" textAlignment="natural" minimumFontSize="17" id="xRw-lf-vSY">
-                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="137.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="138.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -541,7 +541,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddInputIngredientCell" id="fLA-lS-JV2" customClass="AddInputIngredientCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="399.5" width="320" height="41"/>
+                                <rect key="frame" x="0.0" y="400.5" width="320" height="41"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fLA-lS-JV2" id="ziG-is-qHa">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
@@ -582,7 +582,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddAddIngredientButtonCell" id="1NZ-D2-1Xf" customClass="AddAddIngredientButtonCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="440.5" width="320" height="41"/>
+                                <rect key="frame" x="0.0" y="441.5" width="320" height="41"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1NZ-D2-1Xf" id="vO3-sQ-kRI">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
@@ -615,7 +615,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddMetaCell" rowHeight="90" id="Aj6-Q6-qF7" customClass="AddMetaCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="481.5" width="320" height="90"/>
+                                <rect key="frame" x="0.0" y="482.5" width="320" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Aj6-Q6-qF7" translatesAutoresizingMaskIntoConstraints="NO" id="gCi-na-h7k">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
@@ -658,7 +658,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddSaveButtonCell" id="pXV-R1-Cki" customClass="AddSaveButtonCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="571.5" width="320" height="61"/>
+                                <rect key="frame" x="0.0" y="572.5" width="320" height="61"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pXV-R1-Cki" id="FPY-SL-dd8">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="61"/>
@@ -1246,30 +1246,30 @@
                                     <outlet property="MealSwitcher" destination="ESa-nc-88a" id="2FR-X0-q8o"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ResultTableViewCell" rowHeight="161" id="HKm-9x-0zb" customClass="ResultTableViewCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="177" width="320" height="161"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ResultTableViewCell" rowHeight="224" id="HKm-9x-0zb" customClass="ResultTableViewCell" customModule="mealpal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="177" width="320" height="224"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HKm-9x-0zb" id="37r-Mm-C2e">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="161"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="224"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view clipsSubviews="YES" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="nd2-kC-U8u">
-                                            <rect key="frame" x="20" y="10" width="280" height="141"/>
+                                        <view clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="nd2-kC-U8u">
+                                            <rect key="frame" x="20" y="5" width="280" height="214"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="0ym-Cz-Gg4">
-                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="141"/>
+                                                    <rect key="frame" x="5" y="0.0" width="270" height="214"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xNc-d9-rdY">
-                                                            <rect key="frame" x="0.0" y="40.5" width="83.5" height="60"/>
+                                                            <rect key="frame" x="0.0" y="77" width="80" height="60"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meal Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nkO-yb-Xha">
-                                                            <rect key="frame" x="98.5" y="60.5" width="83" height="20.5"/>
+                                                            <rect key="frame" x="95" y="97" width="80" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                             <color key="textColor" name="PrimaryText"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WFE-pZ-IZo">
-                                                            <rect key="frame" x="196.5" y="50.5" width="83.5" height="40.5"/>
+                                                            <rect key="frame" x="190" y="87" width="80" height="40.5"/>
                                                             <state key="normal" title="Button"/>
                                                             <buttonConfiguration key="configuration" style="tinted" image="pencil" catalog="system" title="Edit"/>
                                                             <connections>
@@ -1281,11 +1281,12 @@
                                             </subviews>
                                             <color key="backgroundColor" name="CardBackground"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="0ym-Cz-Gg4" secondAttribute="trailing" id="2M2-5H-rUa"/>
+                                                <constraint firstAttribute="trailing" secondItem="0ym-Cz-Gg4" secondAttribute="trailing" constant="5" id="2M2-5H-rUa"/>
                                                 <constraint firstAttribute="bottom" secondItem="0ym-Cz-Gg4" secondAttribute="bottom" id="3Rq-uA-FRQ"/>
+                                                <constraint firstAttribute="height" constant="100" id="4Xu-bF-7TE"/>
                                                 <constraint firstItem="0ym-Cz-Gg4" firstAttribute="top" secondItem="nd2-kC-U8u" secondAttribute="top" id="9NR-CR-uai"/>
                                                 <constraint firstAttribute="width" constant="300" id="MvQ-1r-WTa"/>
-                                                <constraint firstItem="0ym-Cz-Gg4" firstAttribute="leading" secondItem="nd2-kC-U8u" secondAttribute="leading" id="i3U-yn-LnA"/>
+                                                <constraint firstItem="0ym-Cz-Gg4" firstAttribute="leading" secondItem="nd2-kC-U8u" secondAttribute="leading" constant="5" id="i3U-yn-LnA"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1297,8 +1298,8 @@
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="nd2-kC-U8u" secondAttribute="trailing" constant="20" id="4qx-SM-ub8"/>
                                         <constraint firstItem="nd2-kC-U8u" firstAttribute="leading" secondItem="37r-Mm-C2e" secondAttribute="leading" constant="20" id="QSp-Md-ciA"/>
-                                        <constraint firstAttribute="bottom" secondItem="nd2-kC-U8u" secondAttribute="bottom" constant="10" id="YHy-hE-Dye"/>
-                                        <constraint firstItem="nd2-kC-U8u" firstAttribute="top" secondItem="37r-Mm-C2e" secondAttribute="top" constant="10" id="ext-34-lZl"/>
+                                        <constraint firstAttribute="bottom" secondItem="nd2-kC-U8u" secondAttribute="bottom" constant="5" id="YHy-hE-Dye"/>
+                                        <constraint firstItem="nd2-kC-U8u" firstAttribute="top" secondItem="37r-Mm-C2e" secondAttribute="top" constant="5" id="ext-34-lZl"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1760,17 +1761,17 @@
                         <color key="backgroundColor" name="BackgroundLight"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EditMealImageTableViewCell" id="rtQ-eN-vUo" customClass="EditMealImageTableViewCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="320" height="331"/>
+                                <rect key="frame" x="0.0" y="50" width="320" height="333"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rtQ-eN-vUo" id="3Ib-UI-S2t">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="331"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="333"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="TR8-xb-dRC">
-                                            <rect key="frame" x="20" y="20" width="280" height="291"/>
+                                            <rect key="frame" x="20" y="20" width="280" height="293"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ppw-r4-UcW">
-                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="291"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="293"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="12"/>
@@ -1793,17 +1794,17 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EditMealNameTableViewCell" id="HQj-4J-UU0" customClass="EditMealNameTableViewCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="381" width="320" height="141.5"/>
+                                <rect key="frame" x="0.0" y="383" width="320" height="143.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HQj-4J-UU0" id="fNc-G3-WZY">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="141.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="143.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3zW-TN-EpU">
-                                            <rect key="frame" x="30" y="0.0" width="260" height="141.5"/>
+                                            <rect key="frame" x="30" y="0.0" width="260" height="143.5"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Meal Name" borderStyle="roundedRect" placeholder="Change Meal Name Here" textAlignment="natural" minimumFontSize="17" id="lBU-qj-ugj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="141"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="143"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -1824,22 +1825,22 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EditMealIngredientTableViewCell" id="vSa-K1-4pO" customClass="EditMealIngredientTableViewCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="522.5" width="320" height="52"/>
+                                <rect key="frame" x="0.0" y="526.5" width="320" height="41"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vSa-K1-4pO" id="VMq-pE-rVc">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="52"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="ANE-BS-CJt">
-                                            <rect key="frame" x="10" y="0.0" width="300" height="52"/>
+                                            <rect key="frame" x="30" y="0.0" width="260" height="41"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Ingredients" borderStyle="roundedRect" placeholder="Ingridients..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sir-UK-1jQ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="125" height="52"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="105" height="41"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ajP-cj-AxS">
-                                                    <rect key="frame" x="175" y="0.0" width="125" height="52"/>
+                                                    <rect key="frame" x="155" y="0.0" width="105" height="41"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" title="Delete">
                                                         <color key="baseForegroundColor" name="DangerRed"/>
@@ -1852,10 +1853,10 @@
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ANE-BS-CJt" firstAttribute="leading" secondItem="VMq-pE-rVc" secondAttribute="leading" constant="10" id="EUJ-xr-p9r"/>
+                                        <constraint firstItem="ANE-BS-CJt" firstAttribute="leading" secondItem="VMq-pE-rVc" secondAttribute="leading" constant="30" id="EUJ-xr-p9r"/>
                                         <constraint firstAttribute="bottom" secondItem="ANE-BS-CJt" secondAttribute="bottom" id="OAk-Be-IpM"/>
                                         <constraint firstItem="ANE-BS-CJt" firstAttribute="top" secondItem="VMq-pE-rVc" secondAttribute="top" id="W9j-Fl-S7Z"/>
-                                        <constraint firstAttribute="trailing" secondItem="ANE-BS-CJt" secondAttribute="trailing" constant="10" id="hzq-qz-cdQ"/>
+                                        <constraint firstAttribute="trailing" secondItem="ANE-BS-CJt" secondAttribute="trailing" constant="30" id="hzq-qz-cdQ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" name="BackgroundLight"/>
@@ -1865,10 +1866,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EditMealAddRowTableViewCell" id="VgW-AF-hLW" customClass="EditMealAddRowTableViewCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="574.5" width="320" height="52"/>
+                                <rect key="frame" x="0.0" y="567.5" width="320" height="51.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VgW-AF-hLW" id="I53-6x-Mc5">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="52"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="51.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gTP-0p-Vby" userLabel="Add Add Row Button">
@@ -1888,17 +1889,17 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EditMealSaveButtonTableViewCell" id="aXw-Cc-veY" customClass="EditMealSaveButtonTableViewCell" customModule="mealpal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="626.5" width="320" height="52"/>
+                                <rect key="frame" x="0.0" y="619" width="320" height="51"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aXw-Cc-veY" id="mgk-hg-ZFR">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="52"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="51"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="JU6-jq-Nkp">
-                                            <rect key="frame" x="50" y="10" width="220" height="42"/>
+                                            <rect key="frame" x="50" y="10" width="220" height="41"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hpn-MY-5Tp">
-                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="42"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="41"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="tinted" title="Save Meal"/>
                                                     <connections>

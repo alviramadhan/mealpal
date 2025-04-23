@@ -85,14 +85,30 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             // Meal Result Cell
             let meal = filteredMeals[indexPath.row - 2]
             let cell = tableView.dequeueReusableCell(withIdentifier: "ResultTableViewCell", for: indexPath) as! ResultTableViewCell
+            
             cell.SearchScMealNameLabel.text = meal.name
-            cell.SearchScImageView.image = UIImage(named: meal.imageName)
+            // Load image from URL if meal.imageName is a valid URL, else fallback to local asset
+            if let url = URL(string: meal.imageName), meal.imageName.hasPrefix("http") {
+                URLSession.shared.dataTask(with: url) { data, _, _ in
+                    if let data = data {
+                        DispatchQueue.main.async {
+                            cell.SearchScImageView.image = UIImage(data: data)
+                        }
+                    }
+                }.resume()
+            } else {
+                // Use local asset image if no valid URL
+                cell.SearchScImageView.image = UIImage(named: meal.imageName)  // Default image from assets
+            }
+            
             cell.onEditTapped = { [weak self] in
                 guard let self = self else { return }
                 let meal = self.filteredMeals[indexPath.row - 2]
                 self.performSegue(withIdentifier: "EditMealSegue", sender: meal)
             }
             
+            return cell
+        
 //            // Swipe to delete functionality
 //            cell.onDeleteTapped = { [weak self] in
 //                guard let self = self else { return }
@@ -100,7 +116,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
 //                self.deleteMealFromRepository(meal: meal, at: indexPath)
 //            }
 //            
-            return cell
+        
         }
     }
 

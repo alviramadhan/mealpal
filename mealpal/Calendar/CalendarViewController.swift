@@ -47,7 +47,20 @@ class CalendarViewController: UITableViewController {
             let meal = meals[indexPath.row - 2] // Offset by 2 (header + title)
             cell.homeMealTitle.text = meal.title
             cell.homeMealNameLabel.text = meal.name
-            cell.homeMealImageView.image = UIImage(named: meal.imageName)
+
+            // Load image from URL if meal.imageName is a valid URL, else fallback to local asset
+            if let url = URL(string: meal.imageName), meal.imageName.hasPrefix("http") {
+                URLSession.shared.dataTask(with: url) { data, _, _ in
+                    if let data = data {
+                        DispatchQueue.main.async {
+                            cell.homeMealImageView.image = UIImage(data: data)
+                        }
+                    }
+                }.resume()
+            } else {
+                // Fallback to local image in the app's assets if URL is not valid
+                cell.homeMealImageView.image = UIImage(named: meal.imageName) // Default image from assets
+            }
             return cell
         } else {
             // Calendar Header Cell (top scrollable date selector)
