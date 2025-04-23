@@ -32,11 +32,16 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     func fetchUserMeals() {
-        MealRepository.shared.fetchUserMeals { meals in
-            self.allMeals = meals
-            self.applyFilter()
-        }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+           MealRepository.shared.fetchAssignedMeals(forUserId: uid) { meals in
+               self.allMeals = meals
+               self.applyFilter()
+           }
     }
+    
+
+
     
     // MARK: - Table view data source
     

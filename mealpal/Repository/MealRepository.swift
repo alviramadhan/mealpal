@@ -150,6 +150,29 @@ class MealRepository {
     func fetchTemplateMeals(forUserId uid: String, completion: @escaping ([Meal]) -> Void) {
         Firestore.firestore().collection("meals")
             .whereField("userId", isEqualTo: uid)
+            .whereField("isTemplate", isEqualTo: true)
+            .getDocuments { snapshot, error in
+                let meals: [Meal] = snapshot?.documents.compactMap { doc in
+                    let data = doc.data()
+                    return Meal(
+                        id: doc.documentID,
+                        userId: uid,
+                        title: data["title"] as? String ?? "",
+                        name: data["name"] as? String ?? "",
+                        imageName: data["imageName"] as? String ?? "",
+                        date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
+                        ingredients: data["ingredients"] as? [String] ?? []
+                    )
+                } ?? []
+                completion(meals)
+            }
+    }
+
+    // Fetch assigned meals (not templates) for a user
+    func fetchAssignedMeals(forUserId uid: String, completion: @escaping ([Meal]) -> Void) {
+        Firestore.firestore().collection("meals")
+            .whereField("userId", isEqualTo: uid)
+            .whereField("isTemplate", isEqualTo: false)  // Only fetch assigned meals (not templates)
             .getDocuments { snapshot, error in
                 let meals: [Meal] = snapshot?.documents.compactMap { doc in
                     let data = doc.data()
