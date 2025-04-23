@@ -15,4 +15,5 @@ struct Meal {
     let imageName: String    // image filename or Firebase URL later
     let date: Date           // e.g. 2025-04-10
     let ingredients: [String]
+    let template: Bool
 }

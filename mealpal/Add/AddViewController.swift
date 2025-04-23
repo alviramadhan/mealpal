@@ -1,4 +1,3 @@
-
 //
 //  AddViewController.swift
 //  mealpal
@@ -100,83 +99,170 @@ func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMe
     }
 }
 
-func saveMeal() {
-    guard let uid = Auth.auth().currentUser?.uid else { return }
+    // MARK: - Save Meal Logic
+    private var lastSavedMealId: String?
 
-    for i in 0..<ingredients.count {
-        let indexPath = IndexPath(row: 3 + i, section: 0)
-        if let cell = tableView.cellForRow(at: indexPath) as? AddInputIngredientCell {
-            ingredients[i] = cell.InputIngredientTextField.text ?? ""
-        }
-    }
+    func saveMeal() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
 
-    let filteredIngredients = self.ingredients.filter { !$0.isEmpty }
-
-    // If user has selected an image, upload it. Otherwise use a default placeholder URL.
-    if let image = selectedImage,
-       let imageData = image.jpegData(compressionQuality: 0.8) {
-        
-        let imageRef = Storage.storage().reference().child("meal_images/\(UUID().uuidString).jpg")
-        
-        imageRef.putData(imageData, metadata: nil) { metadata, error in
-            if let error = error {
-                print("❌ Image upload failed:", error.localizedDescription)
-                return
+        // Collect the ingredients
+        for i in 0..<ingredients.count {
+            let indexPath = IndexPath(row: 3 + i, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) as? AddInputIngredientCell {
+                ingredients[i] = cell.InputIngredientTextField.text ?? ""
             }
+        }
 
-            imageRef.downloadURL { url, error in
-                guard let imageUrl = url?.absoluteString else {
-                    print("❌ Failed to get image URL")
+        let filteredIngredients = self.ingredients.filter { !$0.isEmpty }
+        let mealId = UUID().uuidString
+        self.lastSavedMealId = mealId
+
+        // If user has selected an image, upload it. Otherwise use a default placeholder URL.
+        if let image = selectedImage,
+           let imageData = image.jpegData(compressionQuality: 0.8) {
+            
+            let imageRef = Storage.storage().reference().child("meal_images/\(mealId).jpg")
+            
+            imageRef.putData(imageData, metadata: nil) { metadata, error in
+                if let error = error {
+                    print("❌ Image upload failed:", error.localizedDescription)
                     return
                 }
-                self.saveMealToFirestore(uid: uid, imageUrl: imageUrl, ingredients: filteredIngredients)
-            }
-        }
-    } else {
-        // Default placeholder image URL if no image was selected
-        let placeholderUrl = "https://via.placeholder.com/150"
-        self.saveMealToFirestore(uid: uid, imageUrl: placeholderUrl, ingredients: filteredIngredients)
-    }
-}
 
-private func saveMealToFirestore(uid: String, imageUrl: String, ingredients: [String]) {
-    let meal = Meal(
-        id: UUID().uuidString,
-        userId: uid,
-        title: selectedTitle,
-        name: mealName,
-        imageName: imageUrl,
-        date: selectedDate,
-        ingredients: ingredients
-    )
-    
+                imageRef.downloadURL { url, error in
+                    guard let imageUrl = url?.absoluteString else {
+                        print("❌ Failed to get image URL")
+                        return
+                    }
 
-
-    MealRepository.shared.saveMealFromAddScreen(meal: meal, imageUrl: imageUrl) { error in
-        if let error = error {
-            print("❌ Failed to save meal to Firestore:", error.localizedDescription)
-            return
-        }
-
-        GroceryRepository.shared.addItems(ingredients, forUser: uid)
-
-        let alert = UIAlertController(title: "Success", message: "Meal saved!", preferredStyle: .alert)
-        self.present(alert, animated: true)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-            alert.dismiss(animated: true) {
-                if let tabBarController = self.tabBarController,
-                   let viewControllers = tabBarController.viewControllers,
-                   viewControllers.count > 1,
-                   let nav = viewControllers[1] as? UINavigationController,
-                   let calendarVC = nav.viewControllers.first as? CalendarViewController {
-                    calendarVC.reloadMeals()
+                    // Save the assigned meal (template = false)
+                    MealRepository.shared.saveAssignedMeal(meal: Meal(
+                        id: mealId,
+                        userId: uid,
+                        title: self.selectedTitle,
+                        name: self.mealName,
+                        imageName: imageUrl,
+                        date: self.selectedDate,
+                        ingredients: filteredIngredients,
+                        template: false // Assigned meal
+                    ), imageUrl: imageUrl) { error in
+                        if let error = error {
+                            print("❌ Error saving assigned meal:", error.localizedDescription)
+                        } else {
+                            self.showTemplateConversionAlert()  // After saving, ask user if they want to create a template
+                        }
+                    }
                 }
-                self.clearForm()
+            }
+        } else {
+            // Default placeholder image URL if no image was selected
+            let placeholderUrl = "https://via.placeholder.com/150"
+            MealRepository.shared.saveAssignedMeal(meal: Meal(
+                id: mealId,
+                userId: uid,
+                title: selectedTitle,
+                name: mealName,
+                imageName: placeholderUrl,
+                date: selectedDate,
+                ingredients: filteredIngredients,
+                template: false // Assigned meal
+            ), imageUrl: placeholderUrl) { error in
+                if let error = error {
+                    print("❌ Error saving assigned meal:", error.localizedDescription)
+                } else {
+                    self.showTemplateConversionAlert()  // After saving, ask user if they want to create a template
+                }
             }
         }
     }
-}
+
+    // MARK: - Template Conversion Alert
+    func showTemplateConversionAlert() {
+        let alert = UIAlertController(title: "Save as Template?", message: "Do you want to save this meal as a template for future use?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            self.createTemplateMeal()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    // MARK: - Create Template Meal
+    func createTemplateMeal() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        // Fetch the last saved assigned meal (template: false)
+        guard let mealId = self.lastSavedMealId else { return }
+        
+        MealRepository.shared.fetchMeal(withId: mealId) { meal in
+            guard let meal = meal else { return }
+            
+            // Create a new meal with the same details but set template = true
+            let templateMeal = Meal(
+                id: UUID().uuidString,  // New meal ID
+                userId: uid,
+                title: meal.title,
+                name: meal.name,
+                imageName: meal.imageName,
+                date: meal.date,
+                ingredients: meal.ingredients,
+                template: true  // Template meal
+            )
+
+            // Save the new template meal
+            MealRepository.shared.saveTemplateMeal(meal: templateMeal, imageUrl: meal.imageName) { error in
+                if let error = error {
+                    print("❌ Error saving template meal:", error.localizedDescription)
+                } else {
+                    print("✅ Template meal saved successfully!")
+                }
+            }
+        }
+    }
+
+    private func saveMealToFirestore(uid: String, imageUrl: String, ingredients: [String]) {
+        let meal = Meal(
+            id: UUID().uuidString,
+            userId: uid,
+            title: selectedTitle,
+            name: mealName,
+            imageName: imageUrl,
+            date: selectedDate,
+            ingredients: ingredients, template: false
+        )
+        
+        
+        
+        MealRepository.shared.saveAssignedMeal(meal: meal, imageUrl: imageUrl) { error in
+            if let error = error {
+                print("❌ Failed to save assigned meal to Firestore:", error.localizedDescription)
+                return
+            }
+            
+            // Show the template conversion alert
+            self.showTemplateConversionAlert()
+            
+            GroceryRepository.shared.addItems(ingredients, forUser: uid)
+            
+            let alert = UIAlertController(title: "Success", message: "Meal saved!", preferredStyle: .alert)
+            self.present(alert, animated: true)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                alert.dismiss(animated: true) {
+                    if let tabBarController = self.tabBarController,
+                       let viewControllers = tabBarController.viewControllers,
+                       viewControllers.count > 1,
+                       let nav = viewControllers[1] as? UINavigationController,
+                       let calendarVC = nav.viewControllers.first as? CalendarViewController {
+                        calendarVC.reloadMeals()
+                    }
+                    self.clearForm()
+                }
+            }
+        }
+    }
 
 @objc func addIngredientTapped() {
     ingredients.append("")

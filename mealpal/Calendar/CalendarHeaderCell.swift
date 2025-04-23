@@ -40,17 +40,21 @@ class CalendarHeaderCell: UITableViewCell {
     @IBOutlet weak var calendarHeaderMonthYearLabel: UILabel!
     
     @IBAction func previousArrowTapped(_ sender: Any) {
-        guard let newDate = Calendar.current.date(byAdding: .day, value: -5, to: selectedDate) else { return }
-           selectedDate = newDate
-           updateDateButtons()
-           onDateChanged?(newDate)
+        // Subtract 1 day from the current selected date (shifting 1 day backward)
+        guard let newDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) else { return }
+
+        selectedDate = newDate
+        updateDateButtons() // Refresh buttons
+        onDateChanged?(newDate) // Notify the parent controller of the updated date
     }
 
     @IBAction func nextArrowTapped(_ sender: Any) {
-        guard let newDate = Calendar.current.date(byAdding: .day, value: 5, to: selectedDate) else { return }
-           selectedDate = newDate
-           updateDateButtons()
-           onDateChanged?(newDate)
+        // Add 1 day from the current selected date (shifting 1 day forward)
+        guard let newDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) else { return }
+
+        selectedDate = newDate
+        updateDateButtons() // Refresh buttons
+        onDateChanged?(newDate) // Notify the parent controller of the updated date
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -67,7 +71,7 @@ class CalendarHeaderCell: UITableViewCell {
     @objc func dateButtonTapped(_ sender: UIButton) {
         guard let newDate = Calendar.current.date(byAdding: .day, value: sender.tag, to: selectedDate) else { return }
         selectedDate = newDate
-        updateDateButtons()
+        updateDateButtons() // Ensure the date buttons are refreshed
         onDateChanged?(newDate)
     }
 

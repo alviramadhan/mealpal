@@ -82,7 +82,9 @@ class MealRepository {
                             name: data["name"] as? String ?? "",
                             imageName: data["imageName"] as? String ?? "",
                             date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
-                            ingredients: data["ingredients"] as? [String] ?? []
+                            ingredients: data["ingredients"] as? [String] ?? [],
+                            template: false
+                            
                         )
                     }
                     completion(meals)
@@ -115,7 +117,9 @@ class MealRepository {
                         name: data["name"] as? String ?? "",
                         imageName: data["imageName"] as? String ?? "",
                         date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
-                        ingredients: data["ingredients"] as? [String] ?? []
+                        ingredients: data["ingredients"] as? [String] ?? [],
+                        template: false
+                        
                     )
                 } ?? []
                 completion(meals)
@@ -161,7 +165,8 @@ class MealRepository {
                         name: data["name"] as? String ?? "",
                         imageName: data["imageName"] as? String ?? "",
                         date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
-                        ingredients: data["ingredients"] as? [String] ?? []
+                        ingredients: data["ingredients"] as? [String] ?? [],
+                        template: false
                     )
                 } ?? []
                 completion(meals)
@@ -183,7 +188,8 @@ class MealRepository {
                         name: data["name"] as? String ?? "",
                         imageName: data["imageName"] as? String ?? "",
                         date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
-                        ingredients: data["ingredients"] as? [String] ?? []
+                        ingredients: data["ingredients"] as? [String] ?? [],
+                        template: false
                     )
                 } ?? []
                 completion(meals)
@@ -193,25 +199,64 @@ class MealRepository {
     func deleteMeal(withId id: String, completion: ((Error?) -> Void)? = nil) {
         Firestore.firestore().collection("meals").document(id).delete(completion: completion)
     }
+    
+    func deleteAssignedMeal(withId id: String, completion: ((Error?) -> Void)? = nil) {
+        Firestore.firestore().collection("meals").document(id).getDocument { snapshot, error in
+            guard let data = snapshot?.data(), let isTemplate = data["isTemplate"] as? Bool else {
+                completion?(NSError(domain: "MealNotFound", code: 404, userInfo: [NSLocalizedDescriptionKey: "Meal not found"]))
+                return
+            }
+            
+            if isTemplate == false {
+                // Proceed with deleting the assigned meal (template: false)
+                Firestore.firestore().collection("meals").document(id).delete(completion: completion)
+            } else {
+                completion?(NSError(domain: "TemplateMealError", code: 403, userInfo: [NSLocalizedDescriptionKey: "Cannot delete template meal"]))
+            }
+        }
+    }
 
-    func saveMealFromAddScreen(meal: Meal, imageUrl: String, completion: ((Error?) -> Void)? = nil) {
+    func deleteTemplateMeal(withId id: String, completion: ((Error?) -> Void)? = nil) {
+        Firestore.firestore().collection("meals").document(id).getDocument { snapshot, error in
+            guard let data = snapshot?.data(), let isTemplate = data["isTemplate"] as? Bool else {
+                completion?(NSError(domain: "MealNotFound", code: 404, userInfo: [NSLocalizedDescriptionKey: "Meal not found"]))
+                return
+            }
+            
+            if isTemplate == true {
+                // Proceed with deleting the template meal (template: true)
+                Firestore.firestore().collection("meals").document(id).delete(completion: completion)
+            } else {
+                completion?(NSError(domain: "AssignedMealError", code: 403, userInfo: [NSLocalizedDescriptionKey: "Cannot delete assigned meal"]))
+            }
+        }
+    }
+
+    // Save a template meal (template: true)
+    func saveTemplateMeal(meal: Meal, imageUrl: String, completion: ((Error?) -> Void)? = nil) {
         guard let uid = Auth.auth().currentUser?.uid else {
             completion?(NSError(domain: "NoUser", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not logged in"]))
             return
         }
-
-        let db = Firestore.firestore()
-
         let templateData: [String: Any] = [
             "userId": uid,
             "title": meal.title,
             "name": meal.name,
             "imageName": imageUrl,
             "ingredients": meal.ingredients,
-            "isTemplate": true
+            "isTemplate": meal.template
         ]
-        db.collection("meals").addDocument(data: templateData)
+        Firestore.firestore().collection("meals").addDocument(data: templateData) { error in
+            completion?(error)
+        }
+    }
 
+    // Save an assigned meal (template: false)
+    func saveAssignedMeal(meal: Meal, imageUrl: String, completion: ((Error?) -> Void)? = nil) {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            completion?(NSError(domain: "NoUser", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not logged in"]))
+            return
+        }
         let assignedData: [String: Any] = [
             "userId": uid,
             "title": meal.title,
@@ -219,12 +264,14 @@ class MealRepository {
             "imageName": imageUrl,
             "ingredients": meal.ingredients,
             "date": Timestamp(date: meal.date),
-            "isTemplate": false
+            "isTemplate": meal.template  
         ]
-        db.collection("meals").addDocument(data: assignedData) { error in
+        Firestore.firestore().collection("meals").addDocument(data: assignedData) { error in
             completion?(error)
         }
     }
+
+    // (Removed saveMealFromAddScreen; now handled in AddViewController)
     
     func fetchMeal(withId id: String, completion: @escaping (Meal?) -> Void) {
         Firestore.firestore().collection("meals").document(id).getDocument { snapshot, error in
@@ -240,7 +287,8 @@ class MealRepository {
                 name: data["name"] as? String ?? "",
                 imageName: data["imageName"] as? String ?? "",
                 date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
-                ingredients: data["ingredients"] as? [String] ?? []
+                ingredients: data["ingredients"] as? [String] ?? [],
+                template: data["isTemplate"] as? Bool ?? false  
             )
             completion(meal)
         }
@@ -269,7 +317,8 @@ class MealRepository {
                             name: data["name"] as? String ?? "",
                             imageName: data["imageName"] as? String ?? "",
                             date: (data["date"] as? Timestamp)?.dateValue() ?? Date(),
-                            ingredients: data["ingredients"] as? [String] ?? []
+                            ingredients: data["ingredients"] as? [String] ?? [],
+                            template: data["isTemplate"] as? Bool ?? false //
                         )
                     }
                     completion(meals)

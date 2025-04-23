@@ -143,7 +143,13 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
      override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
      if editingStyle == .delete {
      // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
+        let meal = filteredMeals[indexPath.row - 2]
+        MealRepository.shared.deleteTemplateMeal(withId: meal.id) { error in
+            if error == nil {
+                self.filteredMeals.remove(at: indexPath.row - 2)
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+        }
      } else if editingStyle == .insert {
      // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
      }

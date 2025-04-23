@@ -62,7 +62,9 @@ class CalendarViewController: UITableViewController {
     }
     
     func reloadMeals() {
-        MealRepository.shared.fetchMeals(for: selectedDate) { meals in
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        MealRepository.shared.fetchAssignedMeals(forUserId: uid) { meals in
             self.meals = meals
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -72,12 +74,12 @@ class CalendarViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        reloadMeals()
+        reloadMeals()  // Fetch assigned meals
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        reloadMeals()
+        reloadMeals()  // Fetch assigned meals on view appear
     }
     
     @IBAction func addMealBarButtonTapped(_ sender: UIBarButtonItem) {
@@ -98,6 +100,7 @@ class CalendarViewController: UITableViewController {
 
         MealRepository.shared.fetchTemplateMeals(forUserId: uid) { meals in
             let picker = UIAlertController(title: "Select a \(type)", message: nil, preferredStyle: .alert)
+
             for meal in meals {
                 picker.addAction(UIAlertAction(title: meal.name, style: .default) { _ in
                     let copiedMeal = Meal(
@@ -107,11 +110,13 @@ class CalendarViewController: UITableViewController {
                         name: meal.name,
                         imageName: meal.imageName,
                         date: self.selectedDate,
-                        ingredients: meal.ingredients
+                        ingredients: meal.ingredients,
+                        template: true // Set template to true for template meals
                     )
                     self.assignMeal(copiedMeal, to: self.selectedDate, as: type)
                 })
             }
+            
             picker.addAction(UIAlertAction(title: "Cancel", style: .cancel))
             self.present(picker, animated: true)
         }
@@ -130,7 +135,7 @@ class CalendarViewController: UITableViewController {
 
         if editingStyle == .delete {
             let meal = meals[indexPath.row - 2]
-            MealRepository.shared.deleteMeal(withId: meal.id) { error in
+            MealRepository.shared.deleteAssignedMeal(withId: meal.id) { error in
                 if error == nil {
                     self.meals.remove(at: indexPath.row - 2)
                     self.tableView.deleteRows(at: [indexPath], with: .automatic)
