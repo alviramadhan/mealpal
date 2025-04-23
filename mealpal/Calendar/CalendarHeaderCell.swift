@@ -35,7 +35,6 @@ class CalendarHeaderCell: UITableViewCell {
     @IBOutlet var calendarDateButtons: [UIButton]!
     @IBOutlet weak var calendarRightArrowButton: UIButton!
     @IBOutlet weak var calendarLeftArrowButton: UIButton!
-    @IBOutlet weak var calendarCalendarButton: UIButton!
     @IBOutlet weak var calendarScrollView: UIScrollView!
     @IBOutlet weak var calendarHeaderMonthYearLabel: UILabel!
     

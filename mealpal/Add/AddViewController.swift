@@ -20,6 +20,16 @@ class AddViewController: UITableViewController, UIImagePickerControllerDelegate,
         selectedTitle = "Breakfast"
         tableView.reloadData()
     }
+    
+    func deleteIngredient(at indexPath: IndexPath) {
+        // Remove the ingredient from the list
+        ingredients.remove(at: indexPath.row - 3)  // Adjust index if needed
+        
+        // Delete the row from the table view
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
+    }
 
 var ingredients: [String] = [""]
 var selectedImage: UIImage?
@@ -45,13 +55,24 @@ override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexP
            }
            return cell
     } else if indexPath.row >= 3 && indexPath.row < 3 + ingredients.count {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AddInputIngredientCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AddInputIngredientCell", for: indexPath) as! AddInputIngredientCell
+           
+           // Configure the cell with ingredient data
+           let ingredient = ingredients[indexPath.row - 3]  // Adjust index if needed
+           cell.InputIngredientTextField.text = ingredient
+
+           // Pass the delete closure to the cell
+           cell.onDeleteTapped = { [weak self] in
+               guard let self = self else { return }
+               self.deleteIngredient(at: indexPath)  // Call the delete method when the button is tapped
+           }
         return cell
     } else if indexPath.row == 3 + ingredients.count {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AddAddIngredientButtonCell", for: indexPath) as! AddAddIngredientButtonCell
         cell.onAddTapped = { [weak self] in
             self?.addIngredientTapped()
         }
+        
         return cell
     } else if indexPath.row == 4 + ingredients.count {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AddMetaCell", for: indexPath) as! AddMetaCell
@@ -65,6 +86,7 @@ override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexP
         let cell = tableView.dequeueReusableCell(withIdentifier: "AddSaveButtonCell", for: indexPath) as! AddSaveButtonCell
         cell.onSaveTapped = { [weak self] in
             self?.saveMeal()
+            self?.clearForm()
         }
         return cell
     }
