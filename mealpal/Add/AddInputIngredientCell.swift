@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddInputIngridient: UITableViewCell {
+class AddInputIngredientCell: UITableViewCell {
     
     @IBOutlet weak var InputIngredientTextField: UITextField!
     override func awakeFromNib() {

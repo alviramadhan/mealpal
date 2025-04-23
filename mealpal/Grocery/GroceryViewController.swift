@@ -19,6 +19,11 @@ class GroceryViewController: UITableViewController {
         title = "Grocery List"
         fetchGroceryItems()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchGroceryItems()
+    }
 
     func fetchGroceryItems() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -28,7 +33,7 @@ class GroceryViewController: UITableViewController {
                 if let docs = snapshot?.documents {
                     self.groceryItems = docs.compactMap { doc in
                         let data = doc.data()
-                        return GroceryItem(name: data["name"] as? String ?? "")
+                        return GroceryItem(id: doc.documentID, name: data["name"] as? String ?? "")
                     }
                     self.tableView.reloadData()
                 }
@@ -56,12 +61,18 @@ class GroceryViewController: UITableViewController {
             // Configure delete action
             cell.onDeleteTapped = { [weak self] in
                 guard let self = self else { return }
-                // Update data source
-                self.groceryItems.remove(at: indexPath.row - 1)
-                // Animate row deletion
-                self.tableView.beginUpdates()
-                self.tableView.deleteRows(at: [indexPath], with: .automatic)
-                self.tableView.endUpdates()
+                let item = self.groceryItems[indexPath.row - 1]
+                Firestore.firestore().collection("groceryItems").document(item.id).delete { error in
+                    if let error = error {
+                        print("❌ Failed to delete grocery item from Firestore:", error.localizedDescription)
+                        return
+                    }
+
+                    self.groceryItems.remove(at: indexPath.row - 1)
+                    self.tableView.beginUpdates()
+                    self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                    self.tableView.endUpdates()
+                }
             }
             return cell
         }

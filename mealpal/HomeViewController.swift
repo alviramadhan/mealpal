@@ -22,14 +22,21 @@ class HomeViewController: UITableViewController {
     
     func fetchMealsFromFirestore() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        let calendar = Calendar.current
+        let startOfToday = calendar.startOfDay(for: Date())
+        let endOfToday = calendar.date(byAdding: .day, value: 1, to: startOfToday)!
+
         Firestore.firestore().collection("meals")
             .whereField("userId", isEqualTo: uid)
+            .whereField("date", isGreaterThanOrEqualTo: Timestamp(date: startOfToday))
+            .whereField("date", isLessThan: Timestamp(date: endOfToday))
             .getDocuments { snapshot, error in
                 if let docs = snapshot?.documents {
                     self.meals = docs.compactMap { doc in
                         let data = doc.data()
                         return Meal(
-                            userId: uid,
+                            id: doc.documentID, userId: uid,
                             title: data["title"] as? String ?? "",
                             name: data["name"] as? String ?? "",
                             imageName: data["imageName"] as? String ?? "",

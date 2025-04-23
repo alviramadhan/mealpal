@@ -7,6 +7,8 @@
 
 import Foundation
 struct Meal {
+    
+    let id: String
     let userId: String       // New: to link meal to a specific user
     let title: String        // e.g. "Breakfast"
     let name: String         // e.g. "Omelette"

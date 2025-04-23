@@ -7,5 +7,6 @@
 
 import Foundation
 struct GroceryItem {
+    var id: String
     var name: String
 }

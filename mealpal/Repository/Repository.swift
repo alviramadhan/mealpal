@@ -25,7 +25,7 @@ class Repository {
                 print("❌ Firebase Auth sign-up failed:", error.localizedDescription)
                 completion(.failure(error))
             } else if let user = result?.user {
-                print("✅ Firebase Auth successful. UID:", user.uid)
+                print("✅ Firebase Auth successful. UID:", user.uid, "Password stored securely in Firebase Auth.")
                 let userData: [String: Any] = [
                     "uid": user.uid,
                     "email": email,

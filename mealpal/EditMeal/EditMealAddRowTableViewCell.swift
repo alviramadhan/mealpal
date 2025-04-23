@@ -11,6 +11,7 @@ class EditMealAddRowTableViewCell: UITableViewCell {
 
     var onAddTapped: (() -> Void)?
     @objc func onTapped(_ sender: UIButton) {
+        print("🟩 Add Row button tapped in EditMealAddRowTableViewCell")
         onAddTapped?()
     }
     @IBOutlet weak var AddRowButton: UIButton!

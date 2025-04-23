@@ -76,7 +76,7 @@ class CalendarViewController: UITableViewController {
                     self.meals = docs.compactMap { doc in
                         let data = doc.data()
                         return Meal(
-                            userId: uid,
+                            id: doc.documentID, userId: uid,
                             title: data["title"] as? String ?? "",
                             name: data["name"] as? String ?? "",
                             imageName: data["imageName"] as? String ?? "",
@@ -97,5 +97,71 @@ class CalendarViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         reloadMeals()
+    }
+    
+    @IBAction func addMealBarButtonTapped(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Add Meal", message: "Select a meal type", preferredStyle: .actionSheet)
+
+        ["Breakfast", "Lunch", "Dinner"].forEach { type in
+            alert.addAction(UIAlertAction(title: type, style: .default) { _ in
+                self.presentMealSelection(for: type)
+            })
+        }
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
+    }
+    
+    func presentMealSelection(for type: String) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let picker = UIAlertController(title: "Select a \(type)", message: nil, preferredStyle: .alert)
+
+        Firestore.firestore().collection("meals")
+            .whereField("userId", isEqualTo: uid)
+            .getDocuments { snapshot, error in
+                if let docs = snapshot?.documents {
+                    for doc in docs {
+                        let data = doc.data()
+                        let mealName = data["name"] as? String ?? ""
+                        let imageName = data["imageName"] as? String ?? ""
+                        let ingredients = data["ingredients"] as? [String] ?? []
+                        let meal = Meal(
+                            id: doc.documentID,
+                            userId: uid,
+                            title: type,
+                            name: mealName,
+                            imageName: imageName,
+                            date: Date(),
+                            ingredients: ingredients
+                        )
+                        picker.addAction(UIAlertAction(title: meal.name, style: .default) { _ in
+                            self.assignMeal(meal, to: self.selectedDate, as: type)
+                        })
+                    }
+                    picker.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                    self.present(picker, animated: true)
+                }
+            }
+    }
+
+    func assignMeal(_ meal: Meal, to date: Date, as type: String) {
+        let uid = Auth.auth().currentUser?.uid ?? ""
+        let mealData: [String: Any] = [
+            "userId": uid,
+            "title": type,
+            "name": meal.name,
+            "imageName": meal.imageName,
+            "date": Timestamp(date: date),
+            "ingredients": meal.ingredients
+        ]
+
+        Firestore.firestore().collection("meals").addDocument(data: mealData) { error in
+            if let error = error {
+                print("❌ Error assigning meal:", error.localizedDescription)
+            } else {
+                print("✅ Meal assigned to \(type) on \(date)")
+                self.reloadMeals()
+            }
+        }
     }
 }

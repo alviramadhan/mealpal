@@ -24,5 +24,12 @@ class AddAddIngredientButtonCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    var onAddTapped: (() -> Void)?
+    
+    @IBAction func addButtonTapped(_ sender: UIButton) {
+        onAddTapped?()
+    }
+    
 
 }

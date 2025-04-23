@@ -39,7 +39,11 @@ class AddViewController: UITableViewController, UIImagePickerControllerDelegate,
             let cell = tableView.dequeueReusableCell(withIdentifier: "AddInputIngredientCell", for: indexPath)
             return cell
         } else if indexPath.row == 3 + ingredients.count {
-            return tableView.dequeueReusableCell(withIdentifier: "AddAddIngredientButtonCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AddAddIngredientButtonCell", for: indexPath) as! AddAddIngredientButtonCell
+            cell.onAddTapped = { [weak self] in
+                self?.addIngredientTapped()
+            }
+            return cell
         } else if indexPath.row == 4 + ingredients.count {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AddMetaCell", for: indexPath) as! AddMetaCell
             cell.datePicker.date = selectedDate
@@ -76,8 +80,25 @@ class AddViewController: UITableViewController, UIImagePickerControllerDelegate,
         present(picker, animated: true, completion: nil)
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+
+        if let image = info[.originalImage] as? UIImage {
+            self.selectedImage = image
+            let imageIndexPath = IndexPath(row: 1, section: 0)
+            self.tableView.reloadRows(at: [imageIndexPath], with: .automatic)
+        }
+    }
+    
     func saveMeal() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        for i in 0..<ingredients.count {
+            let indexPath = IndexPath(row: 3 + i, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) as? AddInputIngredientCell {
+                ingredients[i] = cell.InputIngredientTextField.text ?? ""
+            }
+        }
 
         let filteredIngredients = self.ingredients.filter { !$0.isEmpty }
 
@@ -109,17 +130,26 @@ class AddViewController: UITableViewController, UIImagePickerControllerDelegate,
     }
 
     private func saveMealToFirestore(uid: String, imageUrl: String, ingredients: [String]) {
-        let meal = Meal(
-            userId: uid,
-            title: self.selectedTitle,
-            name: self.mealName,
-            imageName: imageUrl,
-            date: self.selectedDate,
-            ingredients: ingredients
-        )
+        let ref = Firestore.firestore().collection("meals").document()
+        let mealData: [String: Any] = [
+            "userId": uid,
+            "title": selectedTitle,
+            "name": mealName,
+            "imageName": imageUrl,
+            "date": Timestamp(date: selectedDate),
+            "ingredients": ingredients
+        ]
 
-        MealRepository.shared.add(meal: meal)
-        print("Meal: \(meal.title) - \(meal.name)")
+        ref.setData(mealData) { error in
+            if let error = error {
+                print("❌ Failed to save meal to Firestore:", error.localizedDescription)
+                return
+            }
+            print("✅ Meal saved with Firestore document ID:", ref.documentID)
+            // Only add to repository after Firestore save succeeds, if needed
+            // MealRepository.shared.add(meal: meal)
+            print("Meal: \(self.selectedTitle) - \(self.mealName)")
+        }
 
         let db = Firestore.firestore()
         for item in ingredients {
@@ -147,6 +177,18 @@ class AddViewController: UITableViewController, UIImagePickerControllerDelegate,
         ingredients.append("")
         let newIndexPath = IndexPath(row: 3 + ingredients.count - 1, section: 0)
         tableView.insertRows(at: [newIndexPath], with: .automatic)
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.row >= 3 && indexPath.row < 3 + ingredients.count
+    }
+
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete && indexPath.row >= 3 && indexPath.row < 3 + ingredients.count {
+            ingredients.remove(at: indexPath.row - 3)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
     }
     /*
     // MARK: - Navigation

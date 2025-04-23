@@ -16,6 +16,11 @@ class ResultTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    var onEditTapped: (() -> Void)?
+    @IBAction func editButtonPressed(_ sender: UIButton) {
+        onEditTapped?()
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
