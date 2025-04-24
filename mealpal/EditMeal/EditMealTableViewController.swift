@@ -18,7 +18,7 @@ class EditMealTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("🧭 Editing meal with ID:", mealDocumentId)
+        print("Editing meal with ID:", mealDocumentId)
         
         guard !mealDocumentId.isEmpty else {
             print("  mealDocumentId is empty. Cannot fetch Firestore document.")
